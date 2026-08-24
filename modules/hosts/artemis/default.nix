@@ -12,13 +12,14 @@
       [ 
         self.nixosModules.common
 
-        self.nixosModules.artemis-hardware
+        # self.nixosModules.artemis-hardware
 	self.nixosModules.artemis-nvidia
 
-        self.nixosModules.niri
+        # self.nixosModules.niri
+        self.nixosModules.kde
         self.nixosModules.nh
-	self.nixosModules.udiskie
-	self.nixosModules.firefox
+	# self.nixosModules.udiskie
+	# self.nixosModules.firefox
       ];
 
     # This machine's name

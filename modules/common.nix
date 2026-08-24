@@ -5,7 +5,6 @@
     # Enable flake support.
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-    # Bootloader. TODO: Change to GRUB, maybe?
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     
