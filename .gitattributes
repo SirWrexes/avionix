@@ -1,0 +1,2 @@
+secrets/devilutionx/*.age filter=lfs diff=lfs merge=lfs -text
+*.age filter=lfs diff=lfs merge=lfs -text
