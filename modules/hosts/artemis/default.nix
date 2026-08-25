@@ -12,8 +12,8 @@
       [ 
         self.nixosModules.common
 
-        # self.nixosModules.artemis-hardware
-	self.nixosModules.artemis-nvidia
+        self.nixosModules.artemis-hardware
+	# self.nixosModules.artemis-nvidia
 
         # self.nixosModules.niri
         self.nixosModules.kde
