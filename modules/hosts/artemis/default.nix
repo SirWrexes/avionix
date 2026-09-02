@@ -13,17 +13,17 @@
         self.nixosModules.common
 
         self.nixosModules.artemis-hardware
-	self.nixosModules.artemis-nvidia
+        self.nixosModules.artemis-nvidia
 
-	self.nixosModules.remote-touchpad
+        self.nixosModules.remote-touchpad
 
         # self.nixosModules.niri
         self.nixosModules.kde
         self.nixosModules.nh
-	self.nixosModules.udiskie
-	self.nixosModules.firefox
-	self.nixosModules.steam
-	self.nixosModules.discord
+        self.nixosModules.udiskie
+        self.nixosModules.firefox
+        self.nixosModules.steam
+        self.nixosModules.discord
       ];
 
     # This machine's name

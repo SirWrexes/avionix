@@ -17,10 +17,7 @@
       modesetting.enable = true; 
 
       # Prefer open-source drivers. They will eventually replace the proprietary ones.
-      open = false;
-
-      # Turn off GPU when not in use. (experimental)
-      powerManagement.finegrained = false;
+      open = true;
     };
 
      # Enable CUDA support system-wide.
