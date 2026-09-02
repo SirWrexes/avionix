@@ -7,7 +7,13 @@
   
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
-    
+
+    # Hibernation settings
+    # TODO: Isolate power management into its own module with options
+    powerManagement.enable = true;
+    boot.resumeDevice = (builtins.head config.swapDevices).device;
+    systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
+ 
     # Don't be a caveman.
     networking.networkmanager.enable = true;
   
