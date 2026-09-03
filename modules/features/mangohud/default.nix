@@ -13,9 +13,13 @@
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         rm $out/bin/mangohud
+        rm $out/bin/mangoapp
 
         makeWrapper ${pkgs.mangohud}/bin/mangohud $out/bin/mangohud \
-          --add-flags "--config '${./config.ini}'"
+          --set-default MANGOHUD_CONFIGFILE '${./config.ini}'
+
+        makeWrapper ${pkgs.mangohud}/bin/mangoapp $out/bin/mangoapp \
+          --set-default MANGOHUD_CONFIGFILE '${./config.ini}'
       '';
     };
   };
