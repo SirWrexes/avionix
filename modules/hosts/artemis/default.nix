@@ -24,6 +24,8 @@
         self.nixosModules.firefox
         self.nixosModules.steam
         self.nixosModules.discord
+
+        self.nixosModules.devilutionx
       ];
 
     # This machine's name
