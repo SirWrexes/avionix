@@ -10,25 +10,16 @@
   {
     imports =
       [ 
+        self.nixosModules.core
+        self.nixosModules.desktop
+        self.nixosModules.games
         self.nixosModules.common
 
         self.nixosModules.artemis-hardware
         self.nixosModules.artemis-nvidia
-
-        self.nixosModules.remote-touchpad
-
-        # self.nixosModules.niri
-        self.nixosModules.kde
-        self.nixosModules.nh
-        self.nixosModules.udiskie
-        self.nixosModules.firefox
-        self.nixosModules.steam
-        self.nixosModules.discord
-
-        self.nixosModules.devilutionx
       ];
 
     # This machine's name
     networking.hostName = "artemis";
   };
-} 
+}
