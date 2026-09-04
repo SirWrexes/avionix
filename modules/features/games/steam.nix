@@ -2,8 +2,6 @@
 {
   flake.nixosModules.steam = { config, pkgs, lib, ... }:
   {
-    imports = [ self.nixosModules.mangohud ];
-
     programs.steam = {
       enable = true;
       protontricks.enable = true;

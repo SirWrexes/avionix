@@ -13,10 +13,10 @@
         self.nixosModules.core
         self.nixosModules.desktop
         self.nixosModules.games
-        self.nixosModules.common
 
         self.nixosModules.artemis-hardware
         self.nixosModules.artemis-nvidia
+        self.nixosModules.artemis-power
       ];
 
     # This machine's name
