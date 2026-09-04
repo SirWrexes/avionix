@@ -19,7 +19,7 @@
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    boot.kernelPackages = pkgs.linuxPackages_xanmod;
+    boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
     networking.networkmanager.enable = true;
 
