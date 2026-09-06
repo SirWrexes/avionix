@@ -6,7 +6,6 @@
       self.nixosModules.discord
       self.nixosModules.firefox
       self.nixosModules.kde
-      self.nixosModules.udiskie
     ];
   };
 }

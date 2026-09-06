@@ -5,7 +5,7 @@
     environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.wrx-mangohud ];
   };
 
-  perSystem = { pkgs, lib, self', ...}:
+  perSystem = { self', pkgs, lib, ...}:
   {
     packages.wrx-mangohud = pkgs.symlinkJoin {
       name = "wrx-mangohud";
