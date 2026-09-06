@@ -2,23 +2,35 @@
 {
   flake.nixosModules.devilutionx = { config, pkgs, lib, ... }:
   {
-    environment.systemPackages = [ pkgs.devilutionx ];
+    nixpkgs.config.allowUnfree = true;
+    environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.devilutionx ];
+  };
 
-    systemd.user.tmpfiles.rules = let
-      datadir = "%h/.local/share/diasurgical/devilution";
+  perSystem = { self', pkgs, lib, system, ... }:
+  {
+    _module.args.pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "devilutionx" ];
+    };
 
-      packs = [
-        ./DIABDAT.MPQ
-        ./hellfire.mpq
-        ./hfmonk.mpq
-        ./hfmusic.mpq
-        ./hfvoice.mpq
-      ];
+    packages.devilutionx = pkgs.symlinkJoin {
+      name = "devilutionx+mpqs";
+      paths = [ pkgs.devilutionx ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = let
+        packs = [
+          ./DIABDAT.MPQ
+          ./hellfire.mpq
+          ./hfmonk.mpq
+          ./hfmusic.mpq
+          ./hfvoice.mpq
+        ];
 
-      packToRule = pack: "L+ ${datadir}/${builtins.baseNameOf pack} - - - - ${pack}";
-    in
-      [
-        "d ${datadir} 0755 - - -"
-      ] ++ builtins.map packToRule packs;
+        linkPack = pack: "ln -sf ${pack} $out/share/diasurgical/devilutionx/${builtins.baseNameOf pack}";
+      in
+        ''
+          ${builtins.concatStringsSep "\n" (builtins.map linkPack packs)}
+        '';
+    };
   };
 }
