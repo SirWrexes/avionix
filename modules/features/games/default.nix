@@ -8,9 +8,10 @@
 
         /* Platforms */
         self.nixosModules.steam
+        self.nixosModules.battlenet
 
-        /* Standlones */
-        self.nixosModules.devilutionx
+        /* Standlones: uncomment to install */
+        # self.nixosModules.devilutionx
     ];
   };
 }
