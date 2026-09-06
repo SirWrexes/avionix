@@ -4,7 +4,6 @@
   {
     imports = [
       self.nixosModules.bootloader
-      self.nixosModules.fonts
       self.nixosModules.locale
       self.nixosModules.nh
     ];

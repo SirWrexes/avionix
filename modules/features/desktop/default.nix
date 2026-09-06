@@ -5,6 +5,7 @@
     imports = [
       self.nixosModules.discord
       self.nixosModules.firefox
+      self.nixosModules.fonts
       self.nixosModules.kde
     ];
   };
