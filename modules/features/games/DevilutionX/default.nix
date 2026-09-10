@@ -1,9 +1,14 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.devilutionx = { config, pkgs, lib, ... }:
+  flake.nixosModules.gaming = { config, pkgs, lib, ... }:
+  let cfg = config.gaming.games.devilutionx; in
   {
-    nixpkgs.config.allowUnfree = true;
-    environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.devilutionx ];
+    options.gaming.games.devilutionx.enable = lib.mkEnableOption "DevilutionX";
+
+    config = lib.mkIf cfg.enable {
+      nixpkgs.config.allowUnfree = true;
+      environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.devilutionx ];
+    };
   };
 
   perSystem = { self', lib, system, ... }:

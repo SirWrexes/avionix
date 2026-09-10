@@ -1,14 +1,19 @@
 /*
-    Since there's no NixOS package to install Battle.net, the next best option IMO is to do it with Lutris.
-    This module will make Battle.net available as a desktop application, and Lutris will take care of installing
-    it if it is not already, otherwise it'll simply launch it.
+    Since there's no NixOS package to install Battle.net, the next best reproducible option IMO is to do it with Lutris.
+    This module will make Battle.net available as a desktop application, launched with Lutris under the hood.
+    If not already installed on the system, Lutris will launch the installer instead.
 */
 { self, inputs, ... }:
 {
-  flake.nixosModules.battlenet = { config, pkgs, lib, ... }:
+  flake.nixosModules.gaming = { config, pkgs, lib, ... }:
+  let cfg = config.gaming.platforms.battlenet; in
   {
-    nixpkgs.config.allowUnfree = true;
-    environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.battle-net ];
+    options.gaming.platforms.battlenet.enable = lib.mkEnableOption "Battle.net";
+
+    config = lib.mkIf cfg.enable {
+      nixpkgs.config.allowUnfree = true;
+      environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.battle-net ];
+    };
   };
 
   perSystem = { self', lib, config, system, ... }:

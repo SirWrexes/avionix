@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.sudo = { pkgs, config, lib, ... }:
+  flake.nixosModules.core = { pkgs, config, lib, ... }:
   {
     security.sudo.package = pkgs.sudo.override { withInsults = true; };
   };

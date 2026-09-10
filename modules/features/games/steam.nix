@@ -1,16 +1,20 @@
-{ self, inputs, ... }:
 {
-  flake.nixosModules.steam = { config, pkgs, lib, ... }:
+  flake.nixosModules.gaming = { lib, config, ... }:
+  let cfg = config.gaming.platforms.steam; in
   {
-    nixpkgs.config.allowUnfree = true;
+    options.gaming.platforms.steam.enable = lib.mkEnableOption "Steam";
 
-    programs.steam = {
-      enable = true;
-      protontricks.enable = true;
-      remotePlay.openFirewall = true;
+    config = lib.mkIf cfg.enable {
+      nixpkgs.config.allowUnfree = true;
+
+      programs.steam = {
+        enable = true;
+        protontricks.enable = true;
+        remotePlay.openFirewall = true;
+      };
+
+      programs.gamemode.enable = true;
+      programs.gamescope.enable = true;
     };
-
-    programs.gamemode.enable = true;
-    programs.gamescope.enable = true;
   };
 }

@@ -2,24 +2,22 @@
 {
   flake.nixosConfigurations.artemis = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      self.nixosModules.artemis-config
+      self.nixosModules.core
+      self.nixosModules.desktop
+      self.nixosModules.gaming
+      self.nixosModules.artemis
     ];
   };
 
-  flake.nixosModules.artemis-config = { config, pkgs, ... }:
+  flake.nixosModules.artemis = { config, pkgs, ... }:
   {
-    imports =
-      [ 
-        self.nixosModules.core
-        self.nixosModules.desktop
-        self.nixosModules.games
-
-        self.nixosModules.artemis-hardware
-        self.nixosModules.artemis-nvidia
-        self.nixosModules.artemis-power
-      ];
-
-    # This machine's name
     networking.hostName = "artemis";
+
+    gaming.platforms = {
+      steam.enable = true;
+      battlenet.enable = true;
+    };
+
+    gaming.tools.mangohud.enable = true;
   };
 }

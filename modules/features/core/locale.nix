@@ -1,7 +1,6 @@
-{ self, inputs, ... }:
+{ ... }:
 {
-  flake.nixosModules.locale = { pkgs, config, lib, ... }:
-  {
+  flake.nixosModules.core = {
     time.timeZone = "Europe/Paris";
 
     i18n.defaultLocale = "en_GB.UTF-8";

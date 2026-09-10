@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.fonts = { pkgs, config, lib, ... }:
+  flake.nixosModules.desktop = { pkgs, config, lib, ... }:
   {
     fonts.fontconfig.useEmbeddedBitmaps = true;
 

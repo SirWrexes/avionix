@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.artemis-hardware = { config, lib, pkgs, modulesPath, ... }:
+  flake.nixosModules.artemis = { config, lib, pkgs, modulesPath, ... }:
   {
     imports =
       [ (modulesPath + "/installer/scan/not-detected.nix")

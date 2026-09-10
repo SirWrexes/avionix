@@ -1,14 +1,20 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.mangohud = { config, pkgs, lib, ... }:
+  flake.nixosModules.gaming = { config, pkgs, lib, ... }:
+  let cfg = config.gaming.tools.mangohud; in
   {
-    environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.wrx-mangohud ];
+    options.gaming.tools.mangohud.enable = lib.mkEnableOption "MangoHUD";
+
+    config = lib.mkIf cfg.enable {
+      environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.mangohud ];
+    };
   };
 
+  # TODO: Make config file through nix to add implicit dependency on font (Fira NerdFont)
   perSystem = { self', pkgs, lib, ...}:
   {
-    packages.wrx-mangohud = pkgs.symlinkJoin {
-      name = "wrx-mangohud";
+    packages.mangohud = pkgs.symlinkJoin {
+      name = "mangohud-wrapped";
       paths = [ pkgs.mangohud ];
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''

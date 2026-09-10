@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.nh = { config, pkgs, lib, ... }:
+  flake.nixosModules.core = { config, pkgs, lib, ... }:
   {
     programs.nh = {
       enable = true;

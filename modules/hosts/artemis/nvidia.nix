@@ -1,9 +1,8 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.artemis-nvidia = { config, pkgs, ... }:
+  flake.nixosModules.artemis = { config, pkgs, ... }:
   {
-    # NVidia, FUCK YOU!
-    #            -- Our Lord and Saviour Torvalds
+    # Open source drivers or not, there's still a lot of proprietary code at play.
     nixpkgs.config.allowUnfree = true;
 
     # Add the drivers.
@@ -31,7 +30,7 @@
      };
  
      # Enable Multi-Process Service to improve GPU usage with CUDA
-     # See 
+     # See <where link go??>
      systemd.services.nvidia-mps = {
        description = "NVIDIA CUDA Multi-Process Service";
        after = [ "nvidia-persistenced.service" ];
