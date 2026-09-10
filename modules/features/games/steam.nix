@@ -2,6 +2,8 @@
 {
   flake.nixosModules.steam = { config, pkgs, lib, ... }:
   {
+    nixpkgs.config.allowUnfree = true;
+
     programs.steam = {
       enable = true;
       protontricks.enable = true;

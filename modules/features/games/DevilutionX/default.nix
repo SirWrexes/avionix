@@ -6,13 +6,13 @@
     environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.devilutionx ];
   };
 
-  perSystem = { self', pkgs, lib, system, ... }:
-  {
-    _module.args.pkgs = import inputs.nixpkgs {
+  perSystem = { self', lib, system, ... }:
+  let
+    pkgs = import inputs.nixpkgs {
       inherit system;
       config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "devilutionx" ];
     };
-
+  in {
     packages.devilutionx = pkgs.symlinkJoin {
       name = "devilutionx+mpqs";
       paths = [ pkgs.devilutionx ];
