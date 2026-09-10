@@ -8,5 +8,12 @@
       self.nixosModules.fonts
       self.nixosModules.kde
     ];
+
+    hardware.openrazer = {
+      enable = true;
+      users = [ "wrexes" ];
+    };
+
+    services.input-remapper.enable = true;
   };
 }
