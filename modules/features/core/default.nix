@@ -21,7 +21,7 @@
       };
 
       core.flakePath = lib.mkOption {
-        type = types.stringMatching "^/([^/]/?)+";
+        type = types.strMatching "^/([^/]/?)+";
         description = ''
           Absolute path to the directory containing this flake.
         '';
