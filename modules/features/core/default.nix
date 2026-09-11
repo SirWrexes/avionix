@@ -1,27 +1,49 @@
 { ... }:
 {
-  flake.nixosModules.core = { pkgs, ... }:
+  flake.nixosModules.core = { pkgs, lib, config, options, ... }:
+  let cfg = config.core; in
   {
-    boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    options = let inherit (lib) types; in {
+      core.user = lib.mkOption {
+        type = options.users.users.type.nestedTypes.elemType;
+        description = ''
+          Main user of the machine, as defined in `nixosConfiguration.<hostName>.users.users.<userName>`.
+        '';
+      };
 
-    networking.networkmanager.enable = true;
+      core.hostName = lib.mkOption {
+        type = options.networking.hostName.type;
+        description = ''
+          Name of the machine
 
-    environment.systemPackages = with pkgs; [
-      bat
-      btop
-      git
-      lazygit
-      neovim
-    ];
+          Must be exactly identical to the nixosConfiguration.<name> used to build the machine's system.
+        '';
+      };
 
-    # Might want to move that to a users/ module dir at some point
-    # Don't forget to set a password with ‘passwd’ if not done during installation !
-    users.users."wrexes" = {
-      isNormalUser = true;
-      description = "Sir Wrexes";
-      extraGroups = [ "networkmanager" "wheel" ];
-      packages = with pkgs; [];
-      initialPassword = "changeme";
+      core.flakePath = lib.mkOption {
+        type = types.stringMatching "^/([^/])";
+        description = ''
+          Absolute path to the directory containing this flake.
+        '';
+        default = "${cfg.user.home}/.config/nixos";
+      };
+    };
+
+    config = {
+      boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+
+      networking.networkmanager.enable = true;
+      networking.hostName = cfg.hostName;
+      users.users.${cfg.user.name} = cfg.user;
+
+      environment.systemPackages = with pkgs; [
+        bat
+        btop
+        git
+        lazygit
+        neovim
+        nixfmt
+      ];
     };
   };
 }

@@ -3,7 +3,7 @@
   flake.nixosModules.core = { pkgs, lib, ... }:
   {
     systemd.services.numlock-on-boot = {
-      description = "Enable numlock during early userspace";
+      description = "Enable numlock on all TTYs during early userspace";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
