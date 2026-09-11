@@ -21,11 +21,12 @@
       };
 
       core.flakePath = lib.mkOption {
-        type = types.stringMatching "^/([^/])";
+        type = types.stringMatching "^/([^/]/?)+";
         description = ''
           Absolute path to the directory containing this flake.
         '';
         default = "${cfg.user.home}/.config/nixos";
+        apply = lib.removeSuffix "/";
       };
     };
 
