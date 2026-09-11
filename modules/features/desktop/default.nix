@@ -7,12 +7,11 @@
     options.desktop.enable = lib.mkEnableOption "graphical session" // { default = true; };
 
     config = lib.mkIf cfg.enable {
-      # TODO: Extract this its own module with per-game profiles and stuff
-      hardware.openrazer = {
-        enable = true;
-        users = [ "wrexes" ];
-      };
-      services.input-remapper.enable = true;
+      environment.systemPackages = with pkgs; [
+        gimp
+        mpv
+        yt-dlp
+      ];
     };
   };
 }
