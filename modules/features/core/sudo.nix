@@ -7,6 +7,6 @@
 
   perSystem = { pkgs, ... }:
   {
-    packages.sudo = pkgs.sudo.override { withInsults = true; };
+    packages.sudo = pkgs.sudo.override { withInsults = true; } // { name = "sudo+insults"; };
   };
 }
