@@ -10,8 +10,10 @@
         nerd-fonts' = builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts);
       in
       nerd-fonts' ++ [
-        noto-fonts-color-emoji
+        corefonts
         noto-fonts-cjk-sans
+        noto-fonts-color-emoji
+        vista-fonts
       ];
   };
 }
