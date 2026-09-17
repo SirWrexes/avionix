@@ -49,7 +49,7 @@
               pgrep = lib.getExe' pkgs.procps "pgrep";
               pkill = lib.getExe' pkgs.procps "pkill";
               sdrun = lib.getExe' pkgs.systemd "systemd-run";
-              steam = lib.getExe pkgs.steam;
+              steam = lib.getExe config.programs.steam.package;
             in
             "${pkgs.writers.writePython3 activationScript
               {
