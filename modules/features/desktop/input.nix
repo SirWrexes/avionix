@@ -6,7 +6,7 @@
     config = lib.mkIf cfg.enable {
       hardware.openrazer = {
         enable = true;
-        users = [ "wrexes" ];
+        users = [ config.core.user.name ];
       };
 
       services.input-remapper.enable = true;
