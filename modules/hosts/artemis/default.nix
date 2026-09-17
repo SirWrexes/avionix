@@ -10,9 +10,10 @@
     ];
   };
 
-  flake.nixosModules.artemis = { ... }:
-  {
-    core.hostName = "artemis";
-    core.user = self.users.wrexes;
-  };
+  flake.nixosModules.artemis =
+    { ... }:
+    {
+      core.hostName = "artemis";
+      core.user = self.users.wrexes;
+    };
 }

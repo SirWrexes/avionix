@@ -4,7 +4,10 @@
     name = "wrexes";
     isNormalUser = true;
     description = "Sir Wrexes";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     initialPassword = "changeme";
   };
 }
