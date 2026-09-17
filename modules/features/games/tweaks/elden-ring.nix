@@ -17,17 +17,14 @@
 
       baseFlags = [
         "--fullscreen"
-        "--borderless"
+        "--force-grab-cursor"
+        "-w 3440 -W 3440" # TODO: Make some per-host monitor definition setting
+        "-h 1440 -H 1440" # TODO: Make some per-host monitor definition setting
       ];
 
-      mangoFlags =
-        if !config.gaming.tools.mangohud.enable then
-          [ ]
-        else
-          [
-            "--unfocused-fps 30"
-            "--mangoapp"
-          ];
+      mangoFlags = lib.optionals config.gaming.tools.mangohud.enable [
+        "--mangoapp"
+      ];
 
       flags = concat (baseFlags ++ mangoFlags);
     in
