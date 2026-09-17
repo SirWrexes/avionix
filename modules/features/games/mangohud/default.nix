@@ -15,6 +15,7 @@
   {
     packages.mangohud = pkgs.symlinkJoin {
       name = "mangohud-wrapped";
+      meta.mainProgram = pkgs.mangohud.meta.mainProgram;
       paths = [ pkgs.mangohud ];
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
