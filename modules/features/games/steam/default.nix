@@ -82,11 +82,11 @@
                     timeout = 10
                     start_time = time.time()
                     while is_steam_running():
-                        if time.time() - start_time < timeout:
-                            time.sleep(0.5)
-                            continue
-                        print("Taking too long. Kill it.")
-                        subprocess.run(["${pkill}", "-9", "-x", "steam"])
+                        if time.time() - start_time > timeout:
+                            print("Taking too long. Kill it.")
+                            subprocess.run(["${pkill}", "-9", "-x", "steam"])
+                            break
+                        time.sleep(0.5)
 
                 steam_dir = Path.home() / ".local/share/Steam/userdata"
                 if not steam_dir.exists():
