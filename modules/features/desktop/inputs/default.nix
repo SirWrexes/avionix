@@ -11,6 +11,8 @@
       cfg = config.desktop;
     in
     {
+      imports = [ self.nixosModules.razerbat ];
+
       config = lib.mkIf cfg.enable {
         hardware.openrazer = {
           enable = true;
