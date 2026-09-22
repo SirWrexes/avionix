@@ -8,6 +8,9 @@
       ...
     }:
     let
+      width = builtins.toString config.display.primary.width;
+      height = builtins.toString config.display.primary.height;
+
       concat = builtins.concatStringsSep " ";
 
       env = concat [
@@ -18,8 +21,8 @@
       baseFlags = [
         "--fullscreen"
         "--force-grab-cursor"
-        "-w 3440 -W 3440" # TODO: Make some per-host monitor definition setting
-        "-h 1440 -H 1440" # TODO: Make some per-host monitor definition setting
+        "-w ${width}  -W ${width}"
+        "-h ${height} -H ${height}"
       ];
 
       mangoFlags = lib.optionals config.gaming.tools.mangohud.enable [
