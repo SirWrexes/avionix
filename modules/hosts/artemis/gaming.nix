@@ -8,7 +8,7 @@
     tools.mangohud.enable = true;
 
     games.devilutionx = {
-    # enable = true;
+      # enable = true;
       gameFiles = [
         # TODO use secrets here
       ];
