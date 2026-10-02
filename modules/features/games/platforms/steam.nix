@@ -15,7 +15,9 @@
           inherit (lib) types;
         in
         {
-          enable = lib.mkEnableOption "Steam";
+          enable = lib.mkEnableOption "Steam" // {
+            default = config.programs.steam.enable;
+          };
 
           launchOptions = lib.mkOption {
             type = types.attrsOf types.str;
