@@ -43,6 +43,15 @@
             default = "${cfg.user.home}/.config/nixos";
             apply = lib.removeSuffix "/";
           };
+
+          core.system = lib.mkOption {
+            type = types.str;
+            description = ''
+              Alias for for `pkgs.stdenv.hostPlatform.system`.
+            '';
+            default = pkgs.stdenv.hostPlaftorm.system;
+            readOnly = true;
+          };
         };
 
       config = {
@@ -54,7 +63,7 @@
 
         environment.systemPackages = with pkgs; [
           fd
-          rg
+          ripgrep
           bat
           btop
           git
