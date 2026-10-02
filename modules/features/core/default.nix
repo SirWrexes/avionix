@@ -1,4 +1,4 @@
-{ ... }:
+{ self, ... }:
 {
   flake.nixosModules.core =
     {
@@ -12,6 +12,8 @@
       cfg = config.core;
     in
     {
+      imports = [ self.nixosModules.dev ];
+
       options =
         let
           inherit (lib) types;
@@ -56,7 +58,6 @@
           git
           lazygit
           neovim
-          nixfmt
         ];
       };
     };
