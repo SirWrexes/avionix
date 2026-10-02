@@ -53,6 +53,8 @@
         users.users.${cfg.user.name} = cfg.user;
 
         environment.systemPackages = with pkgs; [
+          fd
+          rg
           bat
           btop
           git
