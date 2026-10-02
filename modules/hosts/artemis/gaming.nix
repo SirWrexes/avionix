@@ -1,4 +1,3 @@
-{ self, inputs, ... }:
 {
   flake.nixosModules.artemis.gaming = {
     platforms = {
@@ -7,5 +6,12 @@
     };
 
     tools.mangohud.enable = true;
+
+    games.devilutionx = {
+    # enable = true;
+      gameFiles = [
+        # TODO use secrets here
+      ];
+    };
   };
 }

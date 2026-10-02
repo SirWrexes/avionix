@@ -24,13 +24,16 @@
           enable = lib.mkEnableOption "DevilutionX";
 
           gameFiles = lib.mkOption {
-            type = types.listOf types.path;
+            type = with types; listOf (either str path);
             description = ''
               Game files for DevilutionX.
 
               See https://github.com/diasurgical/DevilutionX#how-to-install
+              For licensig reason, it is recommended not to push this in a git repo.
+              Instead, use a secret management solution.
+
             '';
-            example = [ ./path/to/DIABDAT.MPQ ];
+            example = [ "\${./.}/games/devilutionx/DIABDAT.MPQ" ];
             default = [ ];
           };
         };
