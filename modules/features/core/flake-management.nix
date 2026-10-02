@@ -12,7 +12,7 @@
         enable = true;
         clean.enable = true;
         clean.extraArgs = "--keep-since 7d --keep 3";
-        flake = with config.core; "${flakePath}#${hostName}";
+        flake = with config.core; "${flakePath}#nixosConfigurations.${hostName}";
       };
     };
 }
