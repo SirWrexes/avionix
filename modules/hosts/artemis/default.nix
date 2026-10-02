@@ -34,5 +34,7 @@
           ((iiyama "DP-1") // { primary = true; })
           (iiyama "DP-2")
         ];
+
+      gaming.games.devilutionx.enable = true;
     };
 }
