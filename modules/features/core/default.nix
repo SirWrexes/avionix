@@ -49,7 +49,7 @@
             description = ''
               Alias for for `pkgs.stdenv.hostPlatform.system`.
             '';
-            default = pkgs.stdenv.hostPlaftorm.system;
+            default = pkgs.stdenv.hostPlatform.system;
             readOnly = true;
           };
         };
