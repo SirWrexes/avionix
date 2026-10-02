@@ -63,14 +63,13 @@
           };
         };
 
-      config =
-        lib.mkIf ((lib.length cfg.monitors) > 0) {
-          assertions = [
-            {
-              assertion = builtins.isAttrs cfg.primary;
-              message = cfg.primary;
-            }
-          ];
-        };
+      config = lib.mkIf ((lib.length cfg.monitors) > 0) {
+        assertions = [
+          {
+            assertion = builtins.isAttrs cfg.primary;
+            message = cfg.primary;
+          }
+        ];
+      };
     };
 }

@@ -1,7 +1,9 @@
 /*
-    Since there's no NixOS package to install Battle.net, the next best reproducible option IMO is to do it with Lutris.
+    Since there's no NixOS package to install Battle.net, the simplest alternative IMO is to do it with Lutris.
     This module will make Battle.net available as a desktop application, launched with Lutris under the hood.
     If not already installed on the system, Lutris will launch the installer instead.
+    Note that this means manual deletion of the prefix is required when removing it--since we can't just make a
+    writeable prefix in the store to package it with wine.
 */
 { self, inputs, ... }:
 {

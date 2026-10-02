@@ -14,7 +14,6 @@
 #
 #
 # No but for real though.
-{ ... }:
 {
   flake.nixosModules.core = {
     nix.settings.experimental-features = [
