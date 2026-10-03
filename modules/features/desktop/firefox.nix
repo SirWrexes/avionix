@@ -1,12 +1,14 @@
-{ ... }:
+# TODO: Make module options
+#   - Search engines
+#   - Extensions
+#   - Login to Mozilla account with secrets?
 {
   flake.nixosModules.desktop =
-    { lib, config, ... }:
+    { pkgs, lib, ... }:
     {
       programs.firefox = {
         enable = true;
-        # TODO make a fully configured wrapper
-        # It gets annoying having to reconfigure the most basic settings every time I reinstall it.
+        package = pkgs.firefox-bin;
       };
     };
 }
