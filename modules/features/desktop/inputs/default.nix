@@ -19,6 +19,8 @@
           users = [ config.core.user.name ];
         };
 
+        # TODO: Nixify profile(s)
+        # TODO: Add option to autoload profiles on session login
         services.input-remapper.enable = true;
       };
     };

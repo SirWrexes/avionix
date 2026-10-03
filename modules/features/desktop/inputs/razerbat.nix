@@ -66,7 +66,7 @@
           toUnit =
             device:
             let
-              onDisconnectFlag = lib.optionalString (shouldQuitOnDisconnect device) " --quit-on-disconnect";
+              onDisconnectFlag = lib.optionalString (shouldQuitOnDisconnect device) "--quit-on-disconnect";
             in
             {
               "razerbat-${kebabify device}" = {
@@ -75,8 +75,8 @@
                 wantedBy = [ "graphical-sesstion.target" ];
                 description = "Razer battery indicator for ${device}";
                 serviceConfig = {
-                  type = "simple";
-                  ExecStart = ''${lib.getExe cfg.package} "${device}"${onDisconnectFlag}'';
+                  Type = "simple";
+                  ExecStart = ''${lib.getExe cfg.package} "${device}" ${onDisconnectFlag}'';
                 };
               };
             };
