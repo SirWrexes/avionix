@@ -19,6 +19,8 @@
       inherit inputs;
       specialArgs = {
         packagesDir = ./packages;
+        assetsDir = ./assets;
+        iconsDir = ./assets/icons;
       };
     } (inputs.import-tree ./modules);
 }
