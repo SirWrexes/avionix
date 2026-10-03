@@ -23,7 +23,11 @@
           inherit (cfg.nh) enable;
 
           clean.enable = true;
-          clean.extraArgs = "--keep-since 7d --keep 3";
+          clean.extraArgs = builtins.concaStringsSep " " [
+            "--keep-since 7d"
+            "--keep 3"
+            "--optimise"
+          ];
           flake = builtins.toString flakePath;
         };
 
