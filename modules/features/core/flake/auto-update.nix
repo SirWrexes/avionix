@@ -15,7 +15,6 @@
 
       service = "update-flake-inputs";
 
-      nh = lib.getExe config.programs.nh.package;
       nix = lib.getExe config.nix.package;
       nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flakePath}#${hostName}";
     in
@@ -59,7 +58,7 @@
                 git = ''${lib.getExe config.programs.git.package} -C "${flakePath}"'';
               in
               ''
-                ${git} diff --quiet           -- "${flakePath}/flake.lock && \
+                ${git} diff --quiet           -- "${flakePath}/flake.lock" && \
                 ${git} commit -m "${message}" -- "${flakePath}/flake.lock"
               '';
             apply = pkgs.writeShellScript "${service}.commit.command";
@@ -102,13 +101,11 @@
             '';
             default =
               let
-                hasNh = config.core.flake.nh.enable;
-
                 terminal = "\${TERMINAL:-${lib.getExe pkgs.kdePackages.konsole}}";
                 bash = lib.getExe pkgs.bash;
                 shell = lib.getExe (config.user.shell or config.users.defaultShell or pkgs.bash);
-                switch = if hasNh then "${nh} os switch" else "${nixos-rebuild} switch";
-                dry-build = if hasNh then "${nh} os build --dry" else "${nixos-rebuild} dry-build";
+                switch = "${nixos-rebuild} switch";
+                dry-build = "${nixos-rebuild} dry-build";
               in
               {
                 "Apply updates" = ''
@@ -187,18 +184,18 @@
           readOnly = true;
           default = with cfg; ''
             if ! ${preRunHook}; then
-              echo "info: Update aborted by pre-run hook." > &2
+              echo "info: Update aborted by pre-run hook." 2>&1
               exit
             fi
 
             if ! ${command}; then
-              echo "error: Something went wrong during update" > &2
+              echo "error: Something went wrong during update" 2>&1
               exit 1
             fi
 
             ${lib.optionalString commit.enable ''
               if ! ${commit.command}; then
-                echo "error: Something went wrong when committing the update" > &2
+                echo "error: Something went wrong when committing the update" 2>&1
               fi
             ''}
 
@@ -212,6 +209,7 @@
           inherit (cfg) script;
           description = "Updates `${flakePath}`'s inputs.";
           serviceConfig.Type = "oneshot";
+
         };
 
         systemd.user.timers.${service} = {
