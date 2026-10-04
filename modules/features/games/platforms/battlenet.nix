@@ -5,7 +5,12 @@
     Note that this means manual deletion of the prefix is required when removing it--since we can't just make a
     writeable prefix in the store to package it with wine.
 */
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  iconsDir,
+  ...
+}:
 {
   flake.nixosModules.gaming =
     {
@@ -51,7 +56,7 @@
         desktopName = "Battle.net";
         comment = "Blizzard's online gaming and social platform";
         exec = "${lib.getExe pkgs.lutris} lutris:battlenet";
-        icon = ./icon.png;
+        icon = "${iconsDir}/icon.png";
         categories = [ "Game" ];
       };
     };
