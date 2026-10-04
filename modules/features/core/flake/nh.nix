@@ -20,10 +20,10 @@
 
       config = lib.mkIf cfg.enable {
         programs.nh = {
-          inherit (cfg.nh) enable;
+          inherit (cfg) enable;
 
           clean.enable = true;
-          clean.extraArgs = builtins.concaStringsSep " " [
+          clean.extraArgs = builtins.concatStringsSep " " [
             "--keep-since 7d"
             "--keep 3"
             "--optimise"
