@@ -15,10 +15,6 @@
           inherit (lib) types;
         in
         {
-          enable = lib.mkEnableOption "Steam" // {
-            default = config.programs.steam.enable;
-          };
-
           launchOptions = lib.mkOption {
             type = types.attrsOf types.str;
             description = "Custom launch options for Steam games";
@@ -35,17 +31,6 @@
           activationScript = "steam-apply-launch-options";
         in
         lib.mkIf cfg.enable {
-          nixpkgs.config.allowUnfree = true;
-
-          programs.steam = {
-            enable = true;
-            protontricks.enable = true;
-            remotePlay.openFirewall = true;
-          };
-
-          programs.gamemode.enable = true;
-          programs.gamescope.enable = true;
-
           system.userActivationScripts.${activationScript}.text =
             let
               pgrep = lib.getExe' pkgs.procps "pgrep";
