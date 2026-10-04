@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   flake.nixosModules.gaming =
     {
@@ -8,31 +8,27 @@
       ...
     }:
     let
-      width = builtins.toString config.display.primary.width;
-      height = builtins.toString config.display.primary.height;
+      inherit (config.core) system;
 
-      concat = builtins.concatStringsSep " ";
+      id = "1245620";
 
-      env = concat [
+      gamemode = lib.getExe config.programs.gamemode.package;
+      mangohud = lib.getExe self.packages.${system}.mangohud;
+      protontricks = lib.getExe' config.programs.steam.protontricks.package "protontricks";
+
+      env = builtins.concatStringsSep " " ([
+        "PROTON_ENABLE_WAYLAND=1"
         "PROTON_FORCE_LARGE_ADDRESS_AWARE=1"
         "PROTON_NO_WM_DECORATION=1"
-      ];
-
-      baseFlags = [
-        "--fullscreen"
-        "--force-grab-cursor"
-        "-w ${width}  -W ${width}"
-        "-h ${height} -H ${height}"
-      ];
-
-      mangoFlags = lib.optionals config.gaming.tools.mangohud.enable [
-        "--mangoapp"
-      ];
-
-      flags = concat (baseFlags ++ mangoFlags);
+      ]);
     in
     {
-      gaming.platforms.steam.launchOptions."1245620" =
-        "${env} ${lib.getExe pkgs.gamescope} ${flags} -- %command%";
+      gaming.platforms.steam.launchOptions.${id} = ''
+        ${env} ${lib.optionalString config.gaming.tools.mangohud.enable mangohud} ${gamemode} %command%;
+      '';
+
+      system.userActivationScripts.eldenRingGrabCursor.text = ''
+        ${protontricks} ${id} settings grabfullscreen=y
+      '';
     };
 }
