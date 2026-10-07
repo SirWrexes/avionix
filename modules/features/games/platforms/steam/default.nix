@@ -7,6 +7,11 @@
       ...
     }:
     let
+      inherit (lib) types;
+
+      userName = config.core.user.name;
+      userHome = config.users.users.${userName}.home;
+
       cfg = config.gaming.platforms.steam;
     in
     {
@@ -14,9 +19,20 @@
         enable = lib.mkEnableOption "Steam" // {
           default = config.programs.steam.enable;
         };
+
+        steamDir = lib.mkOption {
+          type = with types; str;
+          default = "${userHome}/.steam/steam";
+        };
+
+        steamAppsDir = lib.mkOption {
+          type = with types; str;
+          default = "${cfg.steamDir}/steamapps";
+          readOnly = true;
+        };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable || config.programs.steam.enable) {
         nixpkgs.config.allowUnfree = true;
 
         programs.steam = {
@@ -27,7 +43,6 @@
 
         programs.gamemode.enable = true;
         programs.gamescope.enable = true;
-
       };
     };
 }

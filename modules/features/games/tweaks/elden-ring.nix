@@ -14,7 +14,6 @@
 
       gamemode = lib.getExe config.programs.gamemode.package;
       mangohud = lib.getExe self.packages.${system}.mangohud;
-      protontricks = lib.getExe' config.programs.steam.protontricks.package "protontricks";
 
       env = builtins.concatStringsSep " " ([
         "PROTON_ENABLE_WAYLAND=1"
@@ -23,12 +22,11 @@
       ]);
     in
     {
-      gaming.platforms.steam.launchOptions.${id} = ''
-        ${env} ${lib.optionalString config.gaming.tools.mangohud.enable mangohud} ${gamemode} %command%;
-      '';
-
-      system.userActivationScripts.eldenRingGrabCursor.text = ''
-        ${protontricks} ${id} settings grabfullscreen=y
-      '';
+      gaming.platforms.steam = {
+        protontricks.${id}.grabfullscreen = true;
+        launchOptions.${id} = ''
+          ${env} ${lib.optionalString config.gaming.tools.mangohud.enable mangohud} ${gamemode} %command%
+        '';
+      };
     };
 }
