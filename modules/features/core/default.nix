@@ -61,6 +61,12 @@
         networking.hostName = cfg.hostName;
         users.users.${cfg.user.name} = cfg.user;
 
+        boot.tmp = {
+          useTmpfs = true;
+          tmpfsSize = "50%";
+          cleanOnBoot = true;
+        };
+
         environment.systemPackages = with pkgs; [
           fd
           ripgrep
