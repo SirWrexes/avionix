@@ -23,7 +23,7 @@
         in
         {
           core.user = lib.mkOption {
-            type = options.users.users.type.nestedTypes.elemType;
+            type = with types; nullOr options.users.users.type.nestedTypes.elemType;
             description = ''
               Main user of the machine, as defined in `nixosConfiguration.<hostName>.users.users.<userName>`.
             '';
@@ -33,8 +33,8 @@
             type = options.networking.hostName.type;
             description = ''
               Name of the machine
-
               Must be exactly identical to the nixosConfiguration.<name> used to build the machine's system.
+              Will set the `networking.hostName` value for you.
             '';
           };
 
@@ -52,12 +52,23 @@
             description = ''
               Alias for for `pkgs.stdenv.hostPlatform.system`.
             '';
-            default = pkgs.stdenv.hostPlatform.system;
             readOnly = true;
+            default = pkgs.stdenv.hostPlatform.system;
           };
         };
 
       config = {
+        assertions = [
+          {
+            assertion = !builtins.isNull cfg.user;
+            message = "You must set a main user using `core.user`";
+          }
+          {
+            assertion = !builtins.isNull cfg.hostName;
+            message = "You must set a host name using `core.hostName`";
+          }
+        ];
+
         boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
         networking.networkmanager.enable = true;
