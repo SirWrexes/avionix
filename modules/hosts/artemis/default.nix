@@ -11,10 +11,15 @@
   };
 
   flake.nixosModules.artemis =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       core.hostName = "artemis";
       core.user = self.users.wrexes;
+
+      hardware.openrazer = {
+        enable = true;
+        users = [ config.core.user.name ];
+      };
 
       services.razerbat = {
         enable = true;

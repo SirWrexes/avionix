@@ -1,6 +1,5 @@
 {
   self,
-  inputs,
   packagesDir,
   ...
 }:
@@ -13,6 +12,8 @@
       ...
     }:
     let
+      inherit (config.core) system;
+
       cfg = config.services.razerbat;
     in
     {
@@ -23,22 +24,10 @@
         {
           enable = lib.mkEnableOption "Razer battery indicator";
 
-          users = lib.mkOption {
-            type = with types; listOf str;
-            description = ''
-              List of users to add to the `openrazer` group.
-
-              Necessary to interact with the userspace daemon. If you already set your name in
-              `hardware.openrazer.users`, you can skip this option.
-            '';
-            default = [ ];
-          };
-
           devices = lib.mkOption {
             type = with types; either str (listOf str);
             description = ''
               Device(s) to enable the tray for.
-
               If left empty, razerbat will be installed but no autostart service will be created.
             '';
             default = [ ];
@@ -54,11 +43,13 @@
             apply = dev: if lib.isString dev then [ dev ] else dev;
           };
 
-          package = lib.mkPackageOption self.packages.${pkgs.stdenv.hostPlatform.system} "razerbat" { };
+          package = lib.mkPackageOption self.packages.${system} "razerbat" { };
         };
 
       config =
         let
+          inherit (config) openrazer;
+
           kebabify = str: lib.toLower (builtins.replaceStrings [ " " ] [ "-" ] str);
 
           shouldQuitOnDisconnect = device: builtins.elem device cfg.quitOnDisconnect;
@@ -86,32 +77,27 @@
         lib.mkIf cfg.enable {
           assertions = [
             {
-              assertion = ((lib.length config.hardware.openrazer.users) > 0) || ((lib.length cfg.users) > 0);
+              assertion = openrazer.enable;
               message = ''
-                OpenRazer requires its user(s) to be assigned to the `openrazer` group to interact with the daemon.
-                Either provide user(s) with `hardware.openrazer.users` or `services.razerbat.users`.
+                Razerbat depends on OpenRazer.
+                Enable it with `hardware.openrazer.enable = true`.
+              '';
+            }
+            {
+              assertion = lib.length openrazer.users > 0;
+              message = ''
+                OpenRazer and Razerbat require users to be given the `openrazer` group.
+                Set them with `hardware.openrazer.users`.
               '';
             }
           ];
-
-          hardware.openrazer = {
-            enable = true;
-            users = lib.mkIf ((lib.length cfg.users) > 0) cfg.users;
-          };
-
           environment.systemPackages = [ cfg.package ];
-
           systemd.user.services = toServiceAttrs cfg.devices;
         };
     };
 
   perSystem =
-    {
-      self',
-      lib,
-      pkgs,
-      ...
-    }:
+    { pkgs, ... }:
     {
       packages.razerbat = pkgs.callPackage "${packagesDir}/razerbat.nix" { };
     };
