@@ -50,6 +50,8 @@
   perSystem =
     { lib, system, ... }:
     let
+      # TODO: Find a way to do this without instatiating a new nixpkgs instance every time.
+      # See https://zimbatm.com/notes/1000-instances-of-nixpkgs/
       pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "devilutionx" ];

@@ -4,11 +4,21 @@
 #   - Login to Mozilla account with secrets?
 {
   flake.nixosModules.desktop =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      config,
+      ...
+    }:
+    let
+      # Firefox has been building from source every time with CUDA support enabled.
+      # This has resulted in OOMs 9/10 times and I gave up on hoping it's ever cached properly.
+      inherit (config) pkgsWithoutCuda;
+      inherit (config.nixpkgs.config) cudaSupport;
+    in
     {
       programs.firefox = {
+        package = with if cudaSupport then pkgsWithoutCuda else pkgs; firefox;
         enable = true;
-        package = pkgs.firefox-bin;
       };
     };
 }

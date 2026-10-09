@@ -12,7 +12,10 @@
       cfg = config.core;
     in
     {
-      imports = [ self.nixosModules.dev ];
+      imports = with self.nixosModules; [
+        dev
+        pkgsWithoutCuda
+      ];
 
       options =
         let

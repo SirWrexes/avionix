@@ -1,12 +1,6 @@
-{ self, inputs, ... }:
 {
   flake.nixosModules.desktop =
-    {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
+    { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
         discord
