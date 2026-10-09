@@ -1,4 +1,3 @@
-{ self, inputs, ... }:
 {
   flake.nixosModules.desktop =
     {
@@ -61,9 +60,15 @@
               m: m.primary
             ) "No primary monitor set" "Multiple primary monitors set" cfg.monitors;
           };
+
+          monitorsConfigured = lib.mkOption {
+            type = with types; bool;
+            readOnly = true;
+            default = lib.length cfg.monitors > 0;
+          };
         };
 
-      config = lib.mkIf ((lib.length cfg.monitors) > 0) {
+      config = lib.mkIf cfg.monitorsConfigured {
         assertions = [
           {
             assertion = builtins.isAttrs cfg.primary;
