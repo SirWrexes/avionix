@@ -48,7 +48,7 @@
 
       config =
         let
-          inherit (config) openrazer;
+          inherit (config.hardware) openrazer;
 
           kebabify = str: lib.toLower (builtins.replaceStrings [ " " ] [ "-" ] str);
 
@@ -63,7 +63,7 @@
               "razerbat-${kebabify device}" = {
                 enable = true;
                 after = [ "graphical-session.target" ];
-                wantedBy = [ "graphical-sesstion.target" ];
+                wantedBy = [ "graphical-session.target" ];
                 description = "Razer battery indicator for ${device}";
                 serviceConfig = {
                   Type = "simple";
