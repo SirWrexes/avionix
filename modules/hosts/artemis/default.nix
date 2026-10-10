@@ -26,6 +26,11 @@
         devices = [ "Razer Naga V2 HyperSpeed" ];
       };
 
+      services.input-remapper = {
+        enable = true;
+        configDir = "${config.core.flakePath}/modules/hosts/artemis/input-remapper";
+      };
+
       display.monitors =
         let
           iiyama = device: {

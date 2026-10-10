@@ -1,16 +1,7 @@
 { self, ... }:
 {
-  flake.nixosModules.desktop =
-    {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.desktop;
-    in
-    {
-      imports = with self.nixosModules; lib.mkIf cfg.enable [ razerbat ];
-    };
+  flake.nixosModules.desktop.imports = with self.nixosModules; [
+    razerbat
+    inputRemapper
+  ];
 }
