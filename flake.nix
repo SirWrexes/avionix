@@ -18,9 +18,13 @@
     inputs.flake-parts.lib.mkFlake {
       inherit inputs;
       specialArgs = {
-        packagesDir = ./packages;
-        assetsDir = ./assets;
-        iconsDir = ./assets/icons;
+        dirs = {
+          root = ./.;
+          assets = ./assets;
+          icons = ./assets/icons;
+          packages = ./packages;
+          secrets = ./secrets;
+        };
       };
     } (inputs.import-tree ./modules);
 }

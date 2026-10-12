@@ -1,6 +1,6 @@
 {
   self,
-  packagesDir,
+  dirs,
   ...
 }:
 {
@@ -99,6 +99,6 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.razerbat = pkgs.callPackage "${packagesDir}/razerbat.nix" { };
+      packages.razerbat = pkgs.callPackage "${dirs.packages}/razerbat.nix" { };
     };
 }

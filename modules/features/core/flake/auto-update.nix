@@ -1,4 +1,4 @@
-{ iconsDir, ... }:
+{ dirs, ... }:
 {
   flake.nixosModules.core =
     {
@@ -83,7 +83,7 @@
 
           icon = lib.mkOption {
             type = with types; path;
-            default = "${iconsDir}/nixos.png";
+            default = "${dirs.icons}/nixos.png";
           };
 
           timeout = lib.mkOption {

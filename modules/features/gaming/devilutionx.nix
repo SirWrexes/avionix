@@ -1,7 +1,7 @@
 {
   self,
   inputs,
-  packagesDir,
+  dirs,
   ...
 }:
 {
@@ -58,6 +58,6 @@
       };
     in
     {
-      packages.devilutionx = pkgs.callPackage "${packagesDir}/devilutionx.nix" { };
+      packages.devilutionx = pkgs.callPackage "${dirs.packages}/devilutionx.nix" { };
     };
 }

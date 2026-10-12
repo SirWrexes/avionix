@@ -8,7 +8,7 @@
 {
   self,
   inputs,
-  iconsDir,
+  dirs,
   ...
 }:
 {
@@ -58,7 +58,7 @@
         desktopName = "Battle.net";
         comment = "Blizzard's online gaming and social platform";
         exec = "${lib.getExe pkgs.lutris} lutris:battlenet";
-        icon = "${iconsDir}/icon.png";
+        icon = "${dirs.icons}/battlenet.png";
         categories = [ "Game" ];
       };
     };
