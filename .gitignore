@@ -1,7 +1,5 @@
-# Generated
 result
 *.qcow2
 *.kate-swp
 .kateproject*
-
 build/

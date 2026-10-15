@@ -1,12 +1,16 @@
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  ...
+}:
 {
   flake.nixosConfigurations.artemis = inputs.nixpkgs.lib.nixosSystem {
-    modules = [
-      self.nixosModules.core
-      self.nixosModules.desktop
-      self.nixosModules.gaming
+    modules = with self.nixosModules; [
+      core
+      desktop
+      gaming
 
-      self.nixosModules.artemis
+      artemis
     ];
   };
 

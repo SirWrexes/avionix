@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.core =
     {
@@ -13,8 +13,10 @@
     in
     {
       imports = with self.nixosModules; [
+        inputs.agenix.nixosModules.default
         dev
         pkgsWithoutCuda
+        secrets
       ];
 
       options =
@@ -39,7 +41,7 @@
           };
 
           core.flakePath = lib.mkOption {
-            type = types.strMatching "^/([^/]/?)+";
+            type = types.strMatching "^/([^/]+/?)+";
             description = ''
               Absolute path to the directory containing this flake.
             '';
