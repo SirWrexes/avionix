@@ -1,4 +1,3 @@
-{ self, inputs, ... }:
 {
   flake.users.wrexes = {
     name = "wrexes";

@@ -80,6 +80,15 @@
                   directory = builtins.toString flakePath;
                   targets = finalTargets;
                 };
+                lspclient.servers.nix = {
+                  highlightingModeRegex = "^Nix$";
+                  url = "https://github.com/oxalica/nil";
+                  command = [ (lib.getExe config.dev.nix.lsp) ];
+                  settings.nil.nix.flake = {
+                    autoArchive = true;
+                    autoEvalInputs = true;
+                  };
+                };
               }
             );
           in

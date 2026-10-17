@@ -15,15 +15,15 @@
           default = true;
         };
 
-        formatter = lib.mkPackageOption pkgs "nixfmt" { };
-
         lsp = lib.mkPackageOption pkgs "nil" { };
+
+        formatter = lib.mkPackageOption pkgs "nixfmt" { };
       };
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [
-          cfg.formatter
-          cfg.lsp
+        environment.systemPackages = with cfg; [
+          lsp
+          formatter
         ];
       };
     };
