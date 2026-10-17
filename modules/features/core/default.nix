@@ -88,10 +88,15 @@
           ripgrep
           bat
           btop
-          git
           lazygit
           neovim
+          wl-clipboard
         ];
+
+        programs.git = {
+          enable = true;
+          lfs.enable = true;
+        };
       };
     };
 }
