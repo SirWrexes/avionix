@@ -42,7 +42,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     mainProgram = "razerbat";
     description = "Lightweight Razer battery indicator tray";
     homepage = "https://github.com/Zenardi/razerbat";
-    changelog = "https://github.com/Zenardi/razerbat/releases/tag/v${finalAttrs.version}";
+    downloadPage = "https://github.com/Zenardi/razerbat/releases/tag/v${finalAttrs.version}";
+    changelog = finalAttrs.meta.downloadPage;
     license = lib.licenses.gpl3Only;
     maintainers = [ ];
   };
