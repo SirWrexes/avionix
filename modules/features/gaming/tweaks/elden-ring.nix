@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   flake.nixosModules.gaming =
     {
@@ -8,25 +7,27 @@
       ...
     }:
     let
-      inherit (config.core) system;
+      inherit (config.programs) gamemode;
+      inherit (config.gaming.tools) mangohud;
 
       id = "1245620";
 
-      gamemode = lib.getExe config.programs.gamemode.package;
-      mangohud = lib.getExe self.packages.${system}.mangohud;
+      env = [
+        ''PROTON_ENABLE_WAYLAND="1"''
+        ''PROTON_FORCE_LARGE_ADDRESS_AWARE="1"''
+        ''PROTON_NO_WM_DECORATION="1"''
+      ];
 
-      env = builtins.concatStringsSep " " ([
-        "PROTON_ENABLE_WAYLAND=1"
-        "PROTON_FORCE_LARGE_ADDRESS_AWARE=1"
-        "PROTON_NO_WM_DECORATION=1"
-      ]);
+      launchOptions =
+        env ++ (optional mangohud.enable "mangohud") ++ (optional gamemode.enable "gamemoderun");
+
+      mergedOptions = concatStringsSep " " launchOptions;
+
     in
     {
       gaming.platforms.steam = {
         protontricks.${id}.grabfullscreen = true;
-        launchOptions.${id} = ''
-          ${env} ${lib.optionalString config.gaming.tools.mangohud.enable mangohud} ${gamemode} %command%
-        '';
+        launchOptions.${id} = "${mergedOptions} %command%";
       };
     };
 }

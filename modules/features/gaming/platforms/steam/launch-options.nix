@@ -10,6 +10,7 @@
       cfg = config.gaming.platforms.steam;
     in
     {
+      # TODO: Add a way to manage shortcuts to non-steam stuff.
       options.gaming.platforms.steam =
         let
           inherit (lib) types;
@@ -40,9 +41,7 @@
                 "--prefix"
                 "PATH"
                 ":"
-                (lib.makeBinPath [
-                  pkgs.procps
-                ])
+                (lib.makeBinPath [ pkgs.procps ])
               ];
             }
             ''

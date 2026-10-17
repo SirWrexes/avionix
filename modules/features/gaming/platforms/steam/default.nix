@@ -33,8 +33,6 @@
       };
 
       config = lib.mkIf (cfg.enable || config.programs.steam.enable) {
-        nixpkgs.config.allowUnfree = true;
-
         programs.steam = {
           enable = true;
           protontricks.enable = true;

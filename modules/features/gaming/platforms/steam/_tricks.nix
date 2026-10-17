@@ -76,7 +76,7 @@ let
     {
       inherit check;
       option = mkOption {
-        type = with types; nullOr (enum values);
+        type = with types; nullOr (enum names);
         description = builtins.concatStringsSep "\n" descriptions;
       };
     };
@@ -388,7 +388,7 @@ in
         mac)     graphics='mac,x11';;
       esac
 
-      awk -v expected=$graphics '
+      awk -v expected="$graphics" '
         ${awkCaptureInside ''Software\Wine\Drivers''}
         ${awkCaptureMatchString "Graphics"}
         ${awkExpect "Graphics"}
