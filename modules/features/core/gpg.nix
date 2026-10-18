@@ -112,8 +112,8 @@
                       fi
                     ''}
                     ${optionalString (hasPublicKey pair) ''
-                      echo "Import public key ${public}"
                       if ! gpg --list-keys ${escapeShellArg fingerprint} >/dev/null 2>&1; then
+                        echo "Import public key ${public}"
                         gpg --import ${escapeShellArg public}
                       fi
                     ''}
@@ -128,7 +128,7 @@
                       awk_cond="$awk_cond && index(\$0. \"$fp\") > 0"
                     fi
                   done
-                  if awk "$awk_cond { found_all = 1 } END { exit ! found_all }"; then
+                  if gpg --export-ownertrust | awk "$awk_cond { found_all = 1 } END { exit ! found_all }"; then
                     gpg --import-ownertrust ${escapeShellArg cfg.ownerTrust}
                   fi
                 '');

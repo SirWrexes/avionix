@@ -18,11 +18,24 @@
         identityPaths = [ "${user.home}/.ssh/id_ed25519" ];
       };
 
-      age.secrets = {
-        "gpg/${gpgFingerprint}.prv".file = dirs.secrets + "/gpg/${gpgFingerprint}.prv.age";
-        "gpg/${gpgFingerprint}.pub".file = dirs.secrets + "/gpg/${gpgFingerprint}.pub.age";
-        "gpg/ownertrust".file = dirs.secrets + "/gpg/ownertrust.age";
-      };
+      age.secrets =
+        let
+          gpgSecrets =
+            map
+              (file: rec {
+                name = "gpg/${file}";
+                value = {
+                  file = "${dirs.secrets}/${name}.age";
+                  owner = user.name;
+                };
+              })
+              [
+                "${gpgFingerprint}.pub"
+                "${gpgFingerprint}.prv"
+                "ownertrust"
+              ];
+        in
+        builtins.listToAttrs gpgSecrets;
 
       programs.gnupg = {
         agent.enable = true;
