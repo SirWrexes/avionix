@@ -7,21 +7,22 @@
       ...
     }:
     let
-      cfg = config.gaming.platforms.steam;
+      steam = config.programs.steam;
+      protontricks = steam.protontricks;
 
       module = import ./_tricks.nix pkgs;
       options = builtins.mapAttrs (name: { option, ... }: option) module;
       checks = builtins.mapAttrs (name: { check, ... }: check) module;
     in
     {
-      options.gaming.platforms.steam =
+      options.programs.steam.protontricks =
         let
           inherit (lib) types mkOption;
 
           stripNulls = lib.filterAttrs (name: value: !builtins.isNull value);
         in
         {
-          protontricks = mkOption {
+          settings = mkOption {
             type =
               with types;
               attrsOf (submodule {
@@ -34,7 +35,7 @@
 
       config =
         let
-          appPrefix = id: "${cfg.steamAppsDir}/compatdata/${id}/pfx";
+          appPrefix = id: "${steam.dirs.steamapps}/compatdata/${id}/pfx";
 
           prepare = id: ''
             WINEPREFIX="${appPrefix id}"
@@ -72,11 +73,10 @@
 
           applyTricks = id: ''
             if (( ''${#TRICKS[@]} != 0 )); then
-              echo "The following protontricks will be applied for $(
-                grep -iF name "${cfg.steamAppsDir}/appmanifest_${id}.acf" | cut -d '"' -f 4
-              ):"
+              target=$(grep -iF name "${steam.dirs.steamapps}/appmanifest_${id}.acf" | cut -d '"' -f 4)
+              echo "The following protontricks will be applied for ''${target:-"APPID #${id}"}:" >&2
               for trick in "''${TRICKS[@]}"; do
-                echo " • $trick"
+                echo " • $trick" >&2
               done
 
               protontricks ${id} -q settings "''${TRICKS[@]}" 2>&1 | awk '
@@ -96,7 +96,7 @@
             ${applyTricks id}
           '';
         in
-        lib.mkIf config.programs.steam.protontricks.enable {
+        lib.mkIf protontricks.enable {
           system.userActivationScripts = lib.mapAttrs' (
             id: tricks:
             let
@@ -107,7 +107,7 @@
                 bashOptions = [ "pipefail" ];
                 runtimeInputs = with pkgs; [
                   gawk
-                  protontricks
+                  protontricks.package
                   wine64Packages.minimal
                   winetricks
                 ];
@@ -123,7 +123,7 @@
                 ${lib.getExe script}
               '';
             }
-          ) cfg.protontricks;
+          ) protontricks.settings;
         };
     };
 }

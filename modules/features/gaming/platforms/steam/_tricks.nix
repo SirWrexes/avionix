@@ -392,7 +392,7 @@ in
         ${awkCaptureInside ''Software\Wine\Drivers''}
         ${awkCaptureMatchString "Graphics"}
         ${awkExpect "Graphics"}
-      ' "$KHCU"
+      ' "$HKCU"
     '';
   };
 
