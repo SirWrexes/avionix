@@ -14,8 +14,13 @@
   };
 
   outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake {
+    {
+      nixpkgs,
+      flake-parts,
+      import-tree,
+      ...
+    }@inputs:
+    flake-parts.lib.mkFlake {
       inherit inputs;
       specialArgs = {
         dirs = rec {
@@ -31,5 +36,5 @@
           scripts = "${packages}/scripts";
         };
       };
-    } (inputs.import-tree ./modules);
+    } (import-tree.filterNot (nixpkgs.lib.hasSuffix ".mod.nix") ./modules);
 }

@@ -61,9 +61,10 @@
 
       config = {
         environment.systemPackages = lib.mkIf config.gaming.eldenRing.modEngine3.enable [ me3 ];
-        programs.steam = {
-          launchOptions.${id} = "${mergedOptions} %command%";
-          protontricks.settings.${id} = {
+
+        programs.steam.apps.${id} = {
+          launchOptions.text = "${mergedOptions} %command%";
+          protontricks.settings = {
             grabfullscreen = true;
             graphics = "wayland";
           };

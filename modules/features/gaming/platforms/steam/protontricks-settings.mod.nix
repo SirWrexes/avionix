@@ -7,16 +7,25 @@ let
     replaceString
     ;
 
+  inherit (builtins)
+    concatStringsSep
+    elemAt
+    foldl'
+    isNull
+    map
+    stringLength
+    ;
+
   types = lib.types // {
-    force = types.strMatching "force";
+    forceStr = types.strMatching "force";
   };
 
   longestElementLength =
     strings:
-    builtins.foldl' (
+    foldl' (
       max: str:
       let
-        len = builtins.stringLength str;
+        len = stringLength str;
       in
       if len > max then len else max
     ) 0 strings;
@@ -56,28 +65,26 @@ let
   awkExpectEqual =
     pairs:
     let
-      lines = builtins.map (
-        pair: "if (${builtins.elemAt pair 0} != ${builtins.elemAt pair 1}) exit 1"
-      ) pairs;
+      lines = map (pair: "if (${elemAt pair 0} != ${elemAt pair 1}) exit 1") pairs;
     in
     ''
       END {
-        ${builtins.concatStringsSep "\n" lines}
+        ${concatStringsSep "\n" lines}
       }
     '';
 
   mkEnum =
     { values, check }:
     let
-      names = builtins.map ({ name, ... }: name) values;
+      names = map ({ name, ... }: name) values;
       width = longestElementLength names;
-      descriptions = builtins.map ({ name, desc }: "${padRight width name} -> desc") values;
+      descriptions = map ({ name, desc }: "${padRight width name} -> desc") values;
     in
     {
       inherit check;
       option = mkOption {
         type = with types; nullOr (enum names);
-        description = builtins.concatStringsSep "\n" descriptions;
+        description = concatStringsSep "\n" descriptions;
       };
     };
 
@@ -97,7 +104,7 @@ let
         '';
         apply =
           value:
-          if builtins.isNull value then
+          if isNull value then
             value
           else if value then
             "y"
@@ -114,19 +121,19 @@ let
       check,
     }:
     let
-      hasForce = !builtins.isNull force;
+      hasForce = !isNull force;
     in
     {
       inherit check;
       option = mkOption {
-        type = with types; if hasForce then nullOr (either bool types.force) else nullOr bool;
+        type = with types; if hasForce then nullOr (either bool forceStr) else nullOr bool;
         description = ''
           enabled  -> ${on}
           disabled -> ${off}${optionalString hasForce "\nforce    -> ${force}"}
         '';
         apply =
           value:
-          if (builtins.isNull value || value == "force") then
+          if (isNull value || value == "force") then
             value
           else if value then
             "on"
@@ -148,25 +155,25 @@ let
       check,
     }:
     let
-      truthyValue = if !builtins.isNull enable then "enable" else "enabled";
-      falsyValue = if !builtins.isNull disable then "disable" else "disabled";
+      truthyValue = if !isNull enable then "enable" else "enabled";
+      falsyValue = if !isNull disable then "disable" else "disabled";
 
-      truthyDesc = if !builtins.isNull enable then enable else enabled;
-      falsyDesc = if !builtins.isNull disable then disable else disabled;
+      truthyDesc = if !isNull enable then enable else enabled;
+      falsyDesc = if !isNull disable then disable else disabled;
 
-      hasForce = !builtins.isNull force;
+      hasForce = !isNull force;
     in
     {
       inherit check;
       option = mkOption {
-        type = with types; if hasForce then nullOr (either bool types.force) else nullOr bool;
+        type = with types; if hasForce then nullOr (either bool forceStr) else nullOr bool;
         description = ''
           enabled  -> ${truthyDesc}
           disabled -> ${falsyDesc}${optionalString hasForce "\nforce    -> ${force}"}
         '';
         apply =
           value:
-          if (builtins.isNull value || value == "force") then
+          if (isNull value || value == "force") then
             value
           else if value then
             truthyValue
@@ -183,7 +190,7 @@ let
       option = mkOption {
         type = with types; nullOr (ints.between lowest highest);
         description = "Set ${name} to the chosen value";
-        apply = value: if builtins.isNull value then value else builtins.toString value;
+        apply = value: if isNull value then value else toString value;
       };
     };
 in
@@ -746,7 +753,7 @@ in
         Use "default" to let Wine detect it automatically. (default)
       '';
       example = 2048;
-      apply = value: if builtins.isNull value then value else builtins.toString value;
+      apply = value: if isNull value then value else toString value;
       default = null;
     };
     check = ''
