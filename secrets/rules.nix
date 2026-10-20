@@ -1,7 +1,7 @@
 with builtins;
 let
 
-  wrexes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBudRiu4sa0x75MQn0blRhoZeKBbfZH+udabRr/oC2tg";
+  wrexes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEeZ2bPiL1z9knSjESgr+nZKzyPSDdmoG5OGrFKFltpC";
 
   recursiveMerge = foldl' (acc: x: acc // x) { };
 
