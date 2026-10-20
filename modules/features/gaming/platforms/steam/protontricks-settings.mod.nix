@@ -45,7 +45,7 @@ let
   '';
 
   awkCaptureMatchString = name: ''
-    capturing && match($0, /^"${name}"="([^"])"/, m) {
+    capturing && match($0, /^"${name}"="([^"]*)"/, m) {
       ${name} = m[1]
       next
     }
