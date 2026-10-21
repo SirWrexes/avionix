@@ -7,7 +7,8 @@
       ...
     }:
     let
-      inherit (config.core) flakePath hostName;
+      inherit (config) host;
+      inherit (config.core) flakePath;
 
       cfg = config.core.flake.nh;
     in
@@ -33,7 +34,7 @@
 
         environment.sessionVariables = {
           # Takes precedence over NH_FLAKE (programs.nh.flake) for `nh os` commands
-          NH_OS_FLAKE = "${flakePath}#nixosConfigurations.${hostName}";
+          NH_OS_FLAKE = "${flakePath}#nixosConfigurations.${host}";
         };
       };
     };

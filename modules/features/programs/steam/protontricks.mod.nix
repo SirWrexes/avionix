@@ -34,6 +34,7 @@ let
   stripNulls = filterAttrs (name: value: !isNull value);
 
   prepare = id: ''
+    EXIT_STATUS=0
     WINEPREFIX="${steam.dirs.steamapps}/compatdata/${id}/pfx"
 
     if [ ! -d "$WINEPREFIX" ]; then
@@ -71,12 +72,12 @@ let
       protontricks ${id} -q settings "''${TRICKS[@]}" 2>&1 | awk '
         !/server-side synchronization/ { print "[protontricks] " $0; fflush() }
       '
-      _status="''${PIPESTATUS[0]}"
+      EXIT_STATUS="''${PIPESTATUS[0]}"
     fi
 
     wineserver -k || true
 
-    exit "$_status"
+    exit "$EXIT_STATUS"
   '';
 
   writeTricksScript =

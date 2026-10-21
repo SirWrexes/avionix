@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.razerbat =
+  flake.nixosModules.services =
     {
       pkgs,
       lib,
@@ -30,6 +30,7 @@
               Device(s) to enable the tray for.
               If left empty, razerbat will be installed but no autostart service will be created.
             '';
+            example = [ "Naga V2 HyperSpeed" ];
             default = [ ];
             apply = dev: if lib.isString dev then [ dev ] else dev;
           };
@@ -39,6 +40,7 @@
             description = ''
               Device(s) to enable quitting on disconnect for.
             '';
+            example = [ "Naga V2 HyperSpeed" ];
             default = [ ];
             apply = dev: if lib.isString dev then [ dev ] else dev;
           };
@@ -69,6 +71,7 @@
                   Type = "simple";
                   ExecStart = ''${lib.getExe cfg.package} "${device}" ${onDisconnectFlag}'';
                 };
+                restartTriggers = [ cfg.package ];
               };
             };
 

@@ -9,20 +9,20 @@
     }:
     let
       inherit (lib) types;
-      inherit (config.core) flakePath hostName;
+      inherit (config) host;
+      inherit (config.core) flakePath;
 
-      cfg = config.core.flake.autoUpdate;
+      cfg = config.flake.autoUpdate;
 
       service = "update-flake-inputs";
 
       nix = lib.getExe config.nix.package;
-      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flakePath}#${hostName}";
+      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flakePath}#${host}";
     in
     {
-      # Took a couple hours to write this whole module subsection only to find out afterwards
-      # about `system.autoUpgrade`.
+      # Took a couple hours to write this whole module subsection only to find out afterwards about `system.autoUpgrade`.
       # Oh well, I like my module better anyway--not copium, I swear! 😨
-      options.core.flake.autoUpdate = {
+      options.flake.autoUpdate = {
         enable = lib.mkEnableOption "auto updating of flake inputs" // {
           default = true;
         };

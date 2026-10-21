@@ -1,4 +1,3 @@
-{ self, inputs, ... }:
 {
   flake.nixosModules.core =
     {
@@ -12,13 +11,6 @@
       cfg = config.core;
     in
     {
-      imports = with self.nixosModules; [
-        inputs.agenix.nixosModules.default
-        dev
-        pkgsWithoutCuda
-        secrets
-      ];
-
       options =
         let
           inherit (lib) types;
@@ -28,15 +20,6 @@
             type = with types; nullOr options.users.users.type.nestedTypes.elemType;
             description = ''
               Main user of the machine, as defined in `nixosConfiguration.<hostName>.users.users.<userName>`.
-            '';
-          };
-
-          core.hostName = lib.mkOption {
-            type = options.networking.hostName.type;
-            description = ''
-              Name of the machine
-              Must be exactly identical to the nixosConfiguration.<name> used to build the machine's system.
-              Will set the `networking.hostName` value for you.
             '';
           };
 
@@ -65,16 +48,11 @@
             assertion = !builtins.isNull cfg.user;
             message = "You must set a main user using `core.user`";
           }
-          {
-            assertion = !builtins.isNull cfg.hostName;
-            message = "You must set a host name using `core.hostName`";
-          }
         ];
 
         boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
         networking.networkmanager.enable = true;
-        networking.hostName = cfg.hostName;
         users.users.${cfg.user.name} = cfg.user;
 
         boot.tmp = {

@@ -8,7 +8,8 @@
       ...
     }:
     let
-      inherit (config.core) flakePath hostName system;
+      inherit (config) host;
+      inherit (config.core) flakePath system;
 
       cfg = config.desktop;
 
@@ -53,7 +54,7 @@
                 [
                   {
                     name = "NixOS Build";
-                    build_cmd = ''os build -o "${flakePath}/build/${hostName}"'';
+                    build_cmd = ''os build -o "${flakePath}/build/${host}"'';
                   }
                   {
                     name = "NixOS Test";

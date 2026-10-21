@@ -1,6 +1,6 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
-  flake.nixosModules.gaming =
+  flake.nixosModules.programs =
     {
       config,
       pkgs,
@@ -8,10 +8,10 @@
       ...
     }:
     let
-      cfg = config.gaming.tools.mangohud;
+      cfg = config.programs.mangohud;
     in
     {
-      options.gaming.tools.mangohud = {
+      options.programs.mangohud = {
         enable = lib.mkEnableOption "MangoHUD";
         package = lib.mkPackageOption self.packages.${pkgs.stdenv.hostPlatform.system} "mangohud" { };
       };

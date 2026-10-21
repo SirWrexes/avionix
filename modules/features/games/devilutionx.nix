@@ -5,7 +5,7 @@
   ...
 }:
 {
-  flake.nixosModules.gaming =
+  flake.nixosModules.games =
     {
       config,
       pkgs,
@@ -13,10 +13,10 @@
       ...
     }:
     let
-      cfg = config.gaming.games.devilutionx;
+      cfg = config.games.devilutionx;
     in
     {
-      options.gaming.games.devilutionx =
+      options.games.devilutionx =
         let
           inherit (lib) types;
         in
@@ -29,9 +29,8 @@
               Game files for DevilutionX.
 
               See https://github.com/diasurgical/DevilutionX#how-to-install
-              For licensig reason, it is recommended not to push this in a git repo.
+              For licensig reason, it is recommended not to push these in a git repo.
               Instead, use a secret management solution.
-
             '';
             example = [ "\${./.}/games/devilutionx/DIABDAT.MPQ" ];
             default = [ ];

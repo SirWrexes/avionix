@@ -1,5 +1,6 @@
-{ dirs, ... }: {
-  flake.nixosModules.artemis =
+{ dirs, ... }:
+{
+  flake.nixosModules.hosts =
     {
       pkgs,
       lib,
@@ -13,11 +14,6 @@
       gpgFingerprint = "E5C24624BEC13FD00B989E32A2838A891FE0378A";
     in
     {
-      programs.ssh = {
-        startAgent = true;
-        agentTimeout = "2h";
-      };
-
       age = {
         rulesFile = "${config.core.flakePath}/secrets/rules.nix";
         identityPaths = [ "${user.home}/.ssh/id_ed25519" ];

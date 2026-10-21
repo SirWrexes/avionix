@@ -16,27 +16,24 @@ let
   );
 in
 {
-  flake.nixosModules.artemis = { lib, config, ... }: {
-    programs.steam = {
-      enable = true;
-      protontricks.enable = true;
-      remotePlay.openFirewall = true;
-    };
+  flake.nixosModules.hosts =
+    { lib, config, ... }:
+    lib.mkIf (config.host == "artemis") {
+      programs.steam = {
+        enable = true;
+        protontricks.enable = true;
+        remotePlay.openFirewall = true;
+      };
 
-    programs.gamemode.enable = true;
-    programs.gamescope.enable = true;
+      programs.mangohud.enable = true;
+      programs.battlenet.enable = true;
+      programs.gamemode.enable = true;
+      programs.gamescope.enable = true;
 
-    age.secrets = mpqSecrets;
-
-    gaming = {
-      tools.mangohud.enable = true;
-
-      platforms.battlenet.enable = true;
-
+      age.secrets = mpqSecrets;
       games.devilutionx = {
         # enable = true;
         gameFiles = lib.mapAttrsToList (name: path: config.age.secrets.${name}.path) mpqSecrets;
       };
     };
-  };
 }

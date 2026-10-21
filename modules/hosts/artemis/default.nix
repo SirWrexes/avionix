@@ -1,24 +1,20 @@
+{ self, ... }:
 {
-  self,
-  inputs,
-  ...
-}:
-{
-  flake.nixosConfigurations.artemis = inputs.nixpkgs.lib.nixosSystem {
-    modules = with self.nixosModules; [
-      core
-      desktop
-      gaming
-
-      artemis
-    ];
-  };
-
-  flake.nixosModules.artemis =
-    { pkgs, config, ... }:
+  flake.nixosModules.hosts =
     {
-      core.hostName = "artemis";
-      core.user = self.users.wrexes;
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      inherit (lib)
+        mkDefault
+        mkIf
+        ;
+    in
+    mkIf (config.host == "artemis") {
+      core.user = mkDefault self.users.wrexes;
 
       hardware.openrazer = {
         enable = true;

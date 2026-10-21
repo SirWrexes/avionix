@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.inputRemapper =
+  flake.nixosModules.services =
     {
       pkgs,
       lib,
@@ -7,23 +7,32 @@
       ...
     }:
     let
+      inherit (builtins)
+        isNull
+        ;
+
+      inherit (lib)
+        escapeShellArg
+        getExe'
+        mkIf
+        mkOption
+        removeSuffix
+        types
+        ;
+
       cfg = config.services.input-remapper;
     in
     {
-      options.services.input-remapper =
-        let
-          inherit (lib) types;
-        in
-        {
-          configDir = lib.mkOption {
-            type = with types; nullOr (strMatching "/([^/]+/)*[^/]+/?");
-            description = ''
-              Path to where your Input Remapper configs are saved.
-            '';
-            default = null;
-            apply = p: if builtins.isNull p then p else lib.removeSuffix "/" p;
-          };
+      options.services.input-remapper = {
+        configDir = mkOption {
+          type = with types; nullOr (strMatching "/([^/]+/)*[^/]+/?");
+          description = ''
+            Path to where your Input Remapper configs are saved.
+          '';
+          default = null;
+          apply = p: if isNull p then p else removeSuffix "/" p;
         };
+      };
 
       config =
         let
@@ -50,7 +59,7 @@
               BACKPORTED=0
               ROLLBACK_ON_EXIT=0
 
-              CONFIG_SRC=${lib.escapeShellArg cfg.configDir}
+              CONFIG_SRC=${escapeShellArg cfg.configDir}
               CONFIG_TMP="$XDG_CONFIG_HOME/input-remapper-2"
 
               ERR_ADVICE_TERM="Try running \`input-remapper-gtk\` from a terminal to get some details, maybe."
@@ -177,7 +186,7 @@
               echo "Copy \"$CONFIG_SRC\" to \"$CONFIG_TMP\""
               run cp -r "$CONFIG_SRC" "$CONFIG_TMP"
 
-              try "$ERR_REMAPPER_EXEC" run ${lib.escapeShellArg (lib.getExe' pkgs.input-remapper "input-remapper-gtk")}
+              try "$ERR_REMAPPER_EXEC" run ${escapeShellArg (getExe' pkgs.input-remapper "input-remapper-gtk")}
               try "$ERR_BACKPORT" backport_configs
               try "$ERR_COMMIT" commit_changes
             '';
@@ -186,11 +195,11 @@
           cliWrapper = pkgs.writeShellApplication {
             name = "input-remapper-control";
             text = ''
-              ${lib.escapeShellArg (lib.getExe' pkgs.input-remapper "input-remapper-control")} --config-dir ${lib.escapeShellArg cfg.configDir} "$@"
+              ${escapeShellArg (getExe' pkgs.input-remapper "input-remapper-control")} --config-dir ${escapeShellArg cfg.configDir} "$@"
             '';
           };
         in
-        lib.mkIf (cfg.enable && !builtins.isNull cfg.configDir) {
+        mkIf (cfg.enable && !isNull cfg.configDir) {
           services.input-remapper.package = pkgs.symlinkJoin {
             name = "input-remapper-wrapped";
 

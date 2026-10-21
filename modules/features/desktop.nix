@@ -1,10 +1,9 @@
-{ self, inputs, ... }:
 {
   flake.nixosModules.desktop =
     {
-      config,
       pkgs,
       lib,
+      config,
       ...
     }:
     let

@@ -1,19 +1,15 @@
-{ self, inputs, ... }:
+# TODO: Find a way to stop NVidia from crashing everything on sleep
 {
-  flake.nixosModules.artemis =
-    {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    {
+  flake.nixosModules.hosts =
+    { lib, config, ... }:
+    lib.mkIf (config.host == "artemis") {
       powerManagement.enable = true;
-      hardware.nvidia.powerManagement.enable = false;
+
+      hardware.nvidia.powerManagement.enable = true;
 
       systemd.sleep.settings.Sleep = {
-        AllowSuspend = "yes";
-        AllowHibernate = "no"; # Fix this crashing on resume BS -- still crashing, TODO: find next fix
+        AllowSuspend = "no";
+        AllowHibernate = "no";
       };
     };
 }

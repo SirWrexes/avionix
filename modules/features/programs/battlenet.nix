@@ -12,7 +12,7 @@
   ...
 }:
 {
-  flake.nixosModules.gaming =
+  flake.nixosModules.programs =
     {
       config,
       pkgs,
@@ -20,10 +20,10 @@
       ...
     }:
     let
-      cfg = config.gaming.platforms.battlenet;
+      cfg = config.programs.battlenet;
     in
     {
-      options.gaming.platforms.battlenet.enable = lib.mkEnableOption "Battle.net";
+      options.programs.battlenet.enable = lib.mkEnableOption "Battle.net";
 
       config = lib.mkIf cfg.enable {
         nixpkgs.config.allowUnfree = true;

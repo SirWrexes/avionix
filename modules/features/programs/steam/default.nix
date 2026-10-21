@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.gaming =
+  flake.nixosModules.programs =
     {
       pkgs,
       lib,
@@ -9,6 +9,7 @@
     let
       inherit (builtins)
         attrNames
+        concatStringsSep
         isNull
         length
         mapAttrs
@@ -21,9 +22,9 @@
         getExe
         makeBinPath
         mkIf
-        mkAssert
         mkOption
         optional
+        optionalString
         readFile
         types
         ;
@@ -40,13 +41,6 @@
         modules = [
           (import ./launch-options.mod.nix)
           (import ./protontricks.mod.nix)
-          ({ config, ... }: {
-            config =
-              with config._module.args;
-              mkAssert (isSteamAppId name)
-                ''Invalid Steam app ID: ${name}. Must match \033[1m${steamAppIdRegex}\033[0m''
-                { };
-          })
         ];
         specialArgs = {
           inherit pkgs;
@@ -70,10 +64,10 @@
         apps = mkOption {
           type =
             with types;
-            attrsWith {
+            addCheck (attrsWith {
               placeholder = "id";
               elemType = steamAppModule;
-            };
+            }) (attrs: map isSteamAppId (attrNames attrs));
           default = { };
           description = ''
             Set of options and configs for each of your Steam apps.
@@ -82,16 +76,28 @@
         };
       };
 
+      # TODO: Check if I can reduce the number of passes over cfg.apps with lib.mapAttrsOfSubmodule
       config = mkIf cfg.enable {
-        #         assertions = [
-        #           {
-        #             assertion = foldlAttrs (
-        #               acc: id: _:
-        #               isSteamAppId id && acc
-        #             ) true cfg.apps;
-        #             message = ''Invalid Steam app ID. Must match '\033[1m${steamAppIdRegex}\033[0m'.'';
-        #           }
-        #         ];
+        assertions = [
+          (
+            let
+              invalidNames = foldlAttrs (
+                acc: id:
+                { protontricks, launchOptions, ... }:
+                acc ++ (optional ((protontricks.enable || launchOptions.enable) && (!isSteamAppId id)) id)
+              ) [ ] cfg.apps;
+              invalidNameCount = length invalidNames;
+            in
+            {
+              assertion = invalidNameCount == 0;
+              message = ''
+                Invalid Steam app ID${optionalString (invalidNameCount > 1) "s"}:
+                    ${concatStringsSep "\n    " invalidNames}
+                  Please edit the corresponding attribute names in `programs.steam.apps`.
+              '';
+            }
+          )
+        ];
 
         systemd.user.services.steam-apply-launch-options =
           let
@@ -135,7 +141,7 @@
             scripts = foldlAttrs (
               acc: id: { protontricks, ... }: acc ++ (optional protontricks.enable protontricks.script)
             ) [ ] cfg.apps;
-            enable = length scripts > 0;
+            enable = cfg.protontricks.enable && (length scripts > 0);
           in
           mkIf enable {
             serviceConfig = {

@@ -23,15 +23,13 @@
     flake-parts.lib.mkFlake {
       inherit inputs;
       specialArgs = {
+        hosts = [ "artemis" ];
         dirs = rec {
           root = ./.;
-
           assets = "${root}/assets";
           icons = "${assets}/icons";
-
           hosts = "${root}/hosts";
           secrets = "${root}/secrets";
-
           packages = "${root}/packages";
           scripts = "${packages}/scripts";
         };
