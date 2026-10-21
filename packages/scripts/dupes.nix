@@ -15,8 +15,9 @@ let
     Finds and lists files with duplicate names (basenames) recursively.
 
     Arguments:
-      DIR              Directory to search inside (defaults to current directory)
-      FD_ARGS          Any extra arguments passed directly to 'fd'
+      DIR              Directory to search inside. (default: \$PWD)
+      FD_ARGS          Any extra arguments passed directly to 'fd'.
+                       More info at `man fd`
 
     Options:
       -h, --help       Display this help message and exit
@@ -24,8 +25,8 @@ let
     Examples:
       ${name}                    Search current directory
       ${name} /var/log           Search a specific directory
-      ${name} . -e txt           Search only for text files
-      ${name} . -H               Include hidden files/directories
+      ${name} ~/.config -e txt   Search only for text files in configs
+      ${name} -H                 Include hidden files/directories
   '';
 in
 writeShellApplication {
@@ -38,6 +39,7 @@ writeShellApplication {
 
   text = ''
     show_help() {
+      # shellcheck disable=SC2016
       echo ${escapeShellArg usage}
     }
 
@@ -48,10 +50,14 @@ writeShellApplication {
       fi
     done
 
-    SEARCH_ROOT="."
-    if [[ -n "$1" && -d "$1" ]]; then
+    if (( "''${#@}" < 2)); then
+      SEARCH_ROOT="$PWD"
+    elif [[ -n "$1" && -d "$1" ]]; then
       SEARCH_ROOT="$1"
       shift
+    else
+      echo "Invalid root: $1" >&2
+      exit 1
     fi
 
     fd "$SEARCH_ROOT" --type f "$@" | awk -F'/' ${escapeShellArg ''
