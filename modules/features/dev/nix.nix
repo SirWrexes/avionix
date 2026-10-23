@@ -7,22 +7,26 @@
       ...
     }:
     let
+      inherit (lib)
+        mkEnableOption
+        mkPackageOption
+        mkIf
+        ;
+
       cfg = config.dev.nix;
     in
     {
       options.dev.nix = {
-        enable = lib.mkEnableOption "Devtools for Nix" // {
+        enable = mkEnableOption "Devtools for Nix" // {
           default = true;
         };
-
-        lsp = lib.mkPackageOption pkgs "nil" { };
-
-        formatter = lib.mkPackageOption pkgs "nixfmt" { };
+        languageServer = mkPackageOption pkgs "nil" { };
+        formatter = mkPackageOption pkgs "nixfmt" { };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = mkIf cfg.enable {
         environment.systemPackages = with cfg; [
-          lsp
+          languageServer
           formatter
         ];
       };

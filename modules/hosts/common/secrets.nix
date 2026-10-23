@@ -8,14 +8,17 @@
       ...
     }:
     let
+      inherit (lib) listToAttrs;
       inherit (config.age) secrets;
 
-      user = config.users.users.${config.core.user.name};
+      user = config.users.user;
+      flake = config.flake;
+
       gpgFingerprint = "E5C24624BEC13FD00B989E32A2838A891FE0378A";
     in
     {
       age = {
-        rulesFile = "${config.core.flakePath}/secrets/rules.nix";
+        rulesFile = "${flake.root}/secrets/rules.nix";
         identityPaths = [ "${user.home}/.ssh/id_ed25519" ];
       };
 
@@ -36,11 +39,11 @@
                 "ownertrust"
               ];
         in
-        builtins.listToAttrs gpgSecrets;
+        listToAttrs gpgSecrets;
 
       programs.gnupg = {
         agent.enable = true;
-        ownerTrust = secrets."gpg/ownertrust".path;
+        ownertrust = secrets."gpg/ownertrust".path;
         keys.${gpgFingerprint} = {
           private = secrets."gpg/${gpgFingerprint}.prv".path;
           public = secrets."gpg/${gpgFingerprint}.pub".path;

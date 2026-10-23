@@ -1,5 +1,5 @@
-{
-  description = "Avionix: NixOS configs from outer space";
+rec {
+  description = "🛫 Avionix — NixOS configs from outer space";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -22,8 +22,12 @@
     }@inputs:
     flake-parts.lib.mkFlake {
       inherit inputs;
+
       specialArgs = {
+        inherit description;
+
         hosts = [ "artemis" ];
+
         dirs = rec {
           root = ./.;
           assets = "${root}/assets";

@@ -1,6 +1,6 @@
 { dirs, ... }:
 {
-  flake.nixosModules.core =
+  flake.nixosModules.flake =
     {
       config,
       pkgs,
@@ -9,15 +9,14 @@
     }:
     let
       inherit (lib) types;
-      inherit (config) host;
-      inherit (config.core) flakePath;
+      inherit (config) host flake;
 
       cfg = config.flake.autoUpdate;
 
       service = "update-flake-inputs";
 
       nix = lib.getExe config.nix.package;
-      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flakePath}#${host}";
+      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flake.root}#${host}";
     in
     {
       # Took a couple hours to write this whole module subsection only to find out afterwards about `system.autoUpgrade`.
@@ -38,7 +37,7 @@
           type = with types; str;
           description = "The script that will run to update inputs";
           default = ''
-            ${nix} flake update --flake "${flakePath}"
+            ${nix} flake update --flake "${flake.root}"
           '';
           apply = pkgs.writeShellScript "${service}.command";
         };
@@ -55,11 +54,11 @@
               let
                 inherit (cfg.commit) message;
 
-                git = ''${lib.getExe config.programs.git.package} -C "${flakePath}"'';
+                git = ''${lib.getExe config.programs.git.package} -C "${flake.root}"'';
               in
               ''
-                ${git} diff --quiet           -- "${flakePath}/flake.lock" && \
-                ${git} commit -m "${message}" -- "${flakePath}/flake.lock"
+                ${git} diff --quiet           -- "${flake.root}/flake.lock" && \
+                ${git} commit -m "${message}" -- "${flake.root}/flake.lock"
               '';
             apply = pkgs.writeShellScript "${service}.commit.command";
           };
@@ -207,13 +206,13 @@
       config = lib.mkIf cfg.enable {
         systemd.user.services.${service} = {
           inherit (cfg) script;
-          description = "Updates `${flakePath}`'s inputs.";
+          description = "Updates `${flake.root}`'s inputs.";
           serviceConfig.Type = "oneshot";
 
         };
 
         systemd.user.timers.${service} = {
-          description = "Automatically updates `${flakePath}`'s inputs.";
+          description = "Automatically updates `${flake.root}`'s inputs.";
           after = [ "multi-user.target" ];
           timerConfig = {
             OnCalendar = "Mon 00:00:00"; # On every Monday, as early as possible

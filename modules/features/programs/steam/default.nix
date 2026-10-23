@@ -29,9 +29,7 @@
         types
         ;
 
-      userName = config.core.user.name;
-      userHome = config.users.users.${userName}.home;
-
+      user = config.users.user or { home = "$HOME"; };
       cfg = config.programs.steam;
 
       steamAppIdRegex = "^[1-9][[:digit:]]+$";
@@ -53,7 +51,7 @@
         dirs = {
           steam = mkOption {
             type = with types; str;
-            default = "${userHome}/.steam/steam";
+            default = "${user.home}/.steam/steam";
           };
           steamapps = mkOption {
             type = with types; str;
@@ -144,11 +142,11 @@
             enable = cfg.protontricks.enable && (length scripts > 0);
           in
           mkIf enable {
+            reloadTriggers = scripts;
             serviceConfig = {
               ExecStart = map (script: "-${getExe script}") scripts;
               Type = "oneshot";
             };
-            reloadTriggers = scripts;
             environment = {
               WINETRICKS_SUPER_QUIET = "1";
               WINEDEBUG = "-fixme,-warn,-trace,-wineusb";

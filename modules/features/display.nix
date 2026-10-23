@@ -7,36 +7,43 @@
       ...
     }:
     let
+      inherit (lib)
+        findSingle
+        isAttrs
+        length
+        mkIf
+        mkOption
+        types
+        ;
+
       cfg = config.display;
     in
     {
       options.display =
         let
-          inherit (lib) types;
-
           monitor = types.submodule {
             options = {
-              device = lib.mkOption {
+              device = mkOption {
                 type = types.str;
                 description = "Device name (port)";
                 example = "DP-1";
               };
-              height = lib.mkOption {
+              height = mkOption {
                 type = types.ints.positive;
                 description = "Monitor display height (pixels)";
                 example = 1080;
               };
-              width = lib.mkOption {
+              width = mkOption {
                 type = types.ints.positive;
                 description = "Monitor display width (pixels)";
                 example = 1920;
               };
-              refreshRate = lib.mkOption {
+              refreshRate = mkOption {
                 type = types.ints.positive;
                 description = "Monitor display refresh rate (hertz)";
                 example = 60;
               };
-              primary = lib.mkOption {
+              primary = mkOption {
                 type = types.bool;
                 description = "Set this monitor as your primary display";
                 example = true;
@@ -46,32 +53,33 @@
           };
         in
         {
-          monitors = lib.mkOption {
+          monitors = mkOption {
             type = with types; listOf monitor;
-            description = "Attribute set of { <device> = <device info> }";
+            description = "List of monitor info";
             default = [ ];
           };
 
-          primary = lib.mkOption {
+          primary = mkOption {
             type = with types; either str monitor;
             description = "Alias for display that is set with `primary = true`";
             readOnly = true;
-            default = lib.findSingle (
+            default = findSingle (
               m: m.primary
             ) "No primary monitor set" "Multiple primary monitors set" cfg.monitors;
           };
 
-          monitorsConfigured = lib.mkOption {
+          monitorsConfigured = mkOption {
             type = with types; bool;
+            default = length cfg.monitors > 0;
             readOnly = true;
-            default = lib.length cfg.monitors > 0;
+            internal = true;
           };
         };
 
-      config = lib.mkIf cfg.monitorsConfigured {
+      config = mkIf cfg.monitorsConfigured {
         assertions = [
           {
-            assertion = builtins.isAttrs cfg.primary;
+            assertion = isAttrs cfg.primary;
             message = cfg.primary;
           }
         ];

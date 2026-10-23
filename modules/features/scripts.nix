@@ -18,27 +18,7 @@ let
     listToAttrs list;
 in
 {
-  flake.nixosModules.core =
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    let
-      userName = config.core.user.name;
-    in
-    {
-      imports = with self.nixosModules; [ shellScripts ];
-
-      config = {
-        programs.zsh.enable = true;
-        users.defaultUserShell = config.programs.zsh.package;
-        users.users.${userName}.useDefaultShell = true;
-      };
-    };
-
-  flake.nixosModules.shellScripts =
+  flake.nixosModules.scripts =
     {
       pkgs,
       lib,

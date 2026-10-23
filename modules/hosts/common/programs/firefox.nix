@@ -3,7 +3,7 @@
 #   - Extensions
 #   - Login to Mozilla account with secrets?
 {
-  flake.nixosModules.desktop =
+  flake.nixosModules.hosts =
     {
       pkgs,
       config,

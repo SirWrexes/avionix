@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   flake.nixosModules.hosts =
     {
@@ -9,16 +8,13 @@
     }:
     let
       inherit (lib)
-        mkDefault
         mkIf
         ;
     in
     mkIf (config.host == "artemis") {
-      core.user = mkDefault self.users.wrexes;
-
       hardware.openrazer = {
         enable = true;
-        users = [ config.core.user.name ];
+        users = [ config.users.user.name ];
       };
 
       services.razerbat = {
@@ -28,7 +24,7 @@
 
       services.input-remapper = {
         enable = true;
-        configDir = "${config.core.flakePath}/modules/hosts/artemis/input-remapper";
+        configDir = "${config.flake.root}/modules/hosts/artemis/input-remapper";
       };
 
       display.monitors =

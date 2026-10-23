@@ -15,12 +15,11 @@
 #
 # No but for real though.
 {
-  flake.nixosModules.core = {
+  flake.nixosModules.hosts = {
+    system.stateVersion = "26.05";
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
     ];
-
-    system.stateVersion = "26.05";
   };
 }
