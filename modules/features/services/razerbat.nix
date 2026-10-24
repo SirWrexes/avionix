@@ -80,11 +80,11 @@
                 after = [ "graphical-session.target" ];
                 wantedBy = [ "graphical-session.target" ];
                 description = "Razer battery indicator for ${device}";
+                restartTriggers = [ cfg.package ];
                 serviceConfig = {
                   Type = "simple";
                   ExecStart = ''${getExe cfg.package} "${device}" ${onDisconnectFlag}'';
                 };
-                restartTriggers = [ cfg.package ];
               };
             };
 
