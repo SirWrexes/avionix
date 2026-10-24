@@ -8,6 +8,7 @@
     }:
     let
       inherit (lib)
+        getExe
         getExe'
         mkDefault
         mkIf
@@ -30,10 +31,16 @@
         };
       };
 
-      system.userActivationScripts.kdeNumlock = mkIf plasma6.enable {
-        text = ''
-          kwriteconfig6 --file kcminputrc --group Keyboard --key NumLock 0
-        '';
+      systemd.user.services.kdenumlock = mkIf plasma6.enable {
+        wantedBy = [ "sysinit-reactivation.target" ];
+        serviceConfig = {
+          ExecStart = getExe (
+            pkgs.writeShellScriptBin "kdenumlock" ''
+              kwriteconfig6 --file kcminputrc --group Keyboard --key NumLock 0
+            ''
+          );
+          Type = "oneshot";
+        };
       };
     };
 }
