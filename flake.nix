@@ -1,7 +1,10 @@
 rec {
-  description = "🛫 Avionix — NixOS configs from outer space";
+  description = "🛫 Avionix — Dotfiles from outer space";
 
   inputs = {
+    # TODO: Switch to using this when I've finally fixed openrazer causing a kernel panic.
+    # nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
