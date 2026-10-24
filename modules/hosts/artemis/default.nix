@@ -28,7 +28,7 @@
       };
     in
     mkIf (config.host == "artemis") {
-      boot.kernelPackages = nixpkgs-576293.linuxPackages_xanmod_latest;
+      boot.kernelPackages = nixpkgs-576293.linuxPackages_xanmod_stable;
 
       hardware.openrazer = {
         enable = true;
