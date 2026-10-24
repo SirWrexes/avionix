@@ -107,6 +107,9 @@
         mkIf enable {
           systemd.user.services.import-gpg-secrets = {
             reloadTriggers = scripts;
+            conflicts = [ "shutdown.target" ];
+            wantedBy = [ "sysinit-reactivation.target" ];
+            partOf = [ "sysinit-reactivation.target" ];
             serviceConfig = {
               ExecStart = map (script: "-${getExe script}") scripts;
               Type = "oneshot";

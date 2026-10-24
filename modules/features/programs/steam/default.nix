@@ -124,14 +124,16 @@
               ExecStart = getExe script;
               Type = "oneshot";
             };
-            reloadTriggers = [
-              json
-              script
-            ];
             environment = {
               STEAMOPTS_STEAM_DIR = cfg.dirs.steam;
               STEAMOPTS_JSON = json;
             };
+            partOf = [ "sysinit-reactivation.target" ];
+            wantedBy = [ "sysinit-reactivation.target" ];
+            reloadTriggers = [
+              json
+              script
+            ];
           };
 
         systemd.user.services.steam-apply-protontricks =
@@ -142,7 +144,6 @@
             enable = cfg.protontricks.enable && (length scripts > 0);
           in
           mkIf enable {
-            reloadTriggers = scripts;
             serviceConfig = {
               ExecStart = map (script: "-${getExe script}") scripts;
               Type = "oneshot";
@@ -155,6 +156,9 @@
               WINEFSYNC = "0";
               WINEESYNC = "0";
             };
+            partOf = [ "sysinit-reactivation.target" ];
+            wantedBy = [ "sysinit-reactivation.target" ];
+            reloadTriggers = scripts;
           };
       };
     };
