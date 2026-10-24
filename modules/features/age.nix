@@ -19,7 +19,12 @@
         in
         {
           rulesFile = mkOption {
-            type = with types; strMatching "/([^/]+/)*[^/]+";
+            type =
+              with types;
+              pathWith {
+                inStore = false;
+                absolute = true;
+              };
             description = ''
               Sets `AGENIX_RULES` environment variable. Agenix usage states the following:
               > AGENIX_RULES environment variable with path to Nix file specifying recipient public keys.
