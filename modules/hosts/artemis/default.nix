@@ -10,33 +10,50 @@
       inherit (lib)
         mkIf
         ;
-
-      # See https://github.com/NixOS/nixpkgs/issues/575192 and https://github.com/NixOS/nixpkgs/pull/576293
-      patch = pkgs.fetchpatch2 {
-        url = "https://github.com/NixOS/nixpkgs/commit/0923331843f01909ddbd657690468643cf2a5aec.diff?full_index=1";
-        hash = "sha256-enLTAX2seKD3CEJ4AliD/aEgCtNo1FGDc4KvPA/S6Bg=";
-      };
-
-      nixpkgs-576293' = pkgs.applyPatches {
-        src = pkgs.path;
-        patches = [ patch ];
-      };
-
-      nixpkgs-576293 = import nixpkgs-576293' {
-        inherit (pkgs.stdenv.hostPlatform) system;
-        config = { inherit (config.nixpkgs.config) allowUnfree; };
-      };
     in
     mkIf (config.host == "artemis") {
-      boot.kernelPackages = nixpkgs-576293.linuxPackages_xanmod_stable;
-
       hardware.openrazer = {
         enable = true;
         users = [ config.users.user.name ];
+        packages.kernel =
+          let
+            kp = config.boot.kernelPackages;
+            moduleBuildDir = "${kp.kernel.dev}/lib/modules/${kp.kernel.modDirVersion}/build";
+          in
+          # Backport of NixOS/nixpkgs#576293 — drop once it reaches nixos-unstable.
+          kp.openrazer.overrideAttrs (old: {
+            makeFlags = old.makeFlags ++ [
+              "INSTALL_MOD_PATH=${placeholder "out"}"
+              "INSTALL_MOD_DIR=kernel/drivers/hid"
+              "INSTALL_MOD_STRIP=1"
+              "DEPMOD=true"
+            ];
+            installTargets = [ "modules_install" ];
+            installFlags = [
+              "-C"
+              moduleBuildDir
+              "M=$(PWD)/driver"
+            ];
+            installPhase = null;
+            postInstall = ''
+              RAZER_MOUNT_OUT="$out/bin/razer_mount"
+              RAZER_RULES_OUT="$out/etc/udev/rules.d/99-razer.rules"
+              install -m 644 -v -D install_files/udev/99-razer.rules $RAZER_RULES_OUT
+              install -m 755 -v -D install_files/udev/razer_mount $RAZER_MOUNT_OUT
+              substituteInPlace $RAZER_RULES_OUT \
+                --replace razer_mount $RAZER_MOUNT_OUT \
+                --replace plugdev openrazer
+              substituteInPlace $RAZER_MOUNT_OUT \
+                --replace /usr/bin/logger ${pkgs.util-linux}/bin/logger \
+                --replace chgrp ${pkgs.coreutils}/bin/chgrp \
+                --replace "PATH='/sbin:/bin:/usr/sbin:/usr/bin'" "" \
+                --replace plugdev openrazer
+            '';
+          });
       };
 
       services.razerbat = {
-        enable = true;
+        enable = false;
         devices = [ "Razer Naga V2 HyperSpeed" ];
       };
 
