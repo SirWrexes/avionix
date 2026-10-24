@@ -15,7 +15,7 @@
               inStore = false;
               absolute = true;
             };
-          default = "${config.users.user.home}/.config/nixos";
+          default = "${if (config.users ? user) then config.users.user.home else "~"}/.config/nixos";
         };
       };
 
