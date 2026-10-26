@@ -1,16 +1,23 @@
 {
   flake.nixosModules.hosts =
-    { lib, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     lib.mkIf (config.host == "artemis") {
-      programs.steam = {
-        enable = true;
-        protontricks.enable = true;
-        remotePlay.openFirewall = true;
-      };
+      programs = {
+        steam = {
+          enable = true;
+          protontricks.enable = true;
+          remotePlay.openFirewall = true;
+        };
 
-      programs.battlenet.enable = true;
-      programs.mangohud.enable = true;
-      programs.gamemode.enable = true;
-      programs.gamescope.enable = true;
+        battlenet.enable = true;
+        mangohud.enable = true;
+        gamemode.enable = true;
+        gamescope.enable = true;
+      };
     };
 }
