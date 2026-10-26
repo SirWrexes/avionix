@@ -11,7 +11,7 @@
         mkIf
         ;
     in
-    mkIf (config.host == "artemis") {
+    mkIf (config.host == "artemis" && false) {
       hardware.openrazer = {
         enable = true;
         users = [ config.users.user.name ];
@@ -57,7 +57,7 @@
         devices = [ "Razer Naga V2 HyperSpeed" ];
       };
 
-      services.input-remapper = {
+      services.input-remapper = mkIf false {
         enable = true;
         configDir = "${config.flake.root}/modules/hosts/artemis/input-remapper";
       };

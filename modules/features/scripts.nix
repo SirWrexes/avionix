@@ -44,6 +44,7 @@ in
       ) [ ] scripts;
     };
 
+  # TODO: Use legacyPackages.shellScripts
   perSystem =
     { pkgs, ... }:
     {

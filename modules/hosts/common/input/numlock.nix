@@ -16,7 +16,7 @@
 
       inherit (config.services.desktopManager) plasma6;
     in
-    {
+    mkIf false {
       systemd.services.numlock-on-boot = {
         enable = mkDefault true;
         description = "Enable numlock on all TTYs during early userspace";

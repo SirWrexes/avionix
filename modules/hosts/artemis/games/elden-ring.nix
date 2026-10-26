@@ -31,7 +31,7 @@
 
       mergedOptions = concatStringsSep " " (env ++ wrappers);
     in
-    mkIf (config.host == "artemis") {
+    mkIf (config.host == "artemis" && false) {
       programs.modEngine3 = {
         enable = true;
         package = pkgs.writeShellApplication {

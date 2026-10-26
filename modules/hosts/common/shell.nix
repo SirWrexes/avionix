@@ -11,7 +11,7 @@
 
       zsh = config.programs.zsh;
     in
-    {
+    mkIf false {
       programs.zsh.enable = mkDefault true;
       users.defaultUserShell = mkIf zsh.enable zsh.package or pkgs.zsh;
     };

@@ -1,7 +1,7 @@
 {
   flake.nixosModules.hosts =
     { lib, config, ... }:
-    lib.mkIf (config.host == "artemis") {
+    lib.mkIf (config.host == "artemis" && false) {
       programs.steam = {
         enable = true;
         protontricks.enable = true;

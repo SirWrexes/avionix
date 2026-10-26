@@ -20,8 +20,9 @@ in
 {
   flake.nixosModules.hosts =
     { lib, config, ... }:
-    lib.mkIf (config.host == "artemis") {
+    {
       age = { inherit secrets; };
+
       games.devilutionx.gameFiles = lib.mapAttrsToList (
         name: path: config.age.secrets.${name}.path
       ) secrets;

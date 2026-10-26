@@ -1,4 +1,3 @@
-{ self, description, ... }:
 {
   flake.nixosModules.hosts =
     { pkgs, lib, ... }:

@@ -30,14 +30,14 @@
         networking.hostName = mkDefault config.host;
         networking.networkmanager.enable = mkDefault true;
 
-        boot.kernelPackages = mkDefault pkgs.linuxPackages_xanmod_latest;
+        # boot.kernelPackages = mkDefault pkgs.linuxPackages_xanmod_latest;
         boot.tmp = {
           useTmpfs = mkDefault true;
           tmpfsSize = mkDefault "50%";
           cleanOnBoot = mkDefault true;
         };
 
-        security.sudo.package = mkDefault (pkgs.sudo.override { withInsults = true; });
+        #         security.sudo.package = mkDefault (pkgs.sudo.override { withInsults = true; });
       };
     };
 
