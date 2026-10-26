@@ -23,7 +23,7 @@
           ]
         );
       };
-      environment.sessionVariables = {
+      environment.variables = {
         # Takes precedence over NH_FLAKE (programs.nh.flake) for `nh os` commands
         NH_OS_FLAKE = mkDefault "${flake.root}#nixosConfigurations.${host}";
       };

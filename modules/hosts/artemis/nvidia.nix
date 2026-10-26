@@ -6,7 +6,7 @@
       config,
       ...
     }:
-    lib.mkIf (config.host == "artemis" && false) {
+    lib.mkIf (config.host == "artemis") {
       # Open source drivers or not, there's still a lot of proprietary code at play.
       nixpkgs.config.allowUnfree = true;
 

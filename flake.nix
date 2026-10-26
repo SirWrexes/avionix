@@ -2,7 +2,7 @@ rec {
   description = "🛫 Avionix — Dotfiles from outer space";
 
   inputs = {
-    # TODO: Switch to using this when I've finally fixed openrazer causing a kernel panic.
+    # TODO: Switch to using this ASAP
     # nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";

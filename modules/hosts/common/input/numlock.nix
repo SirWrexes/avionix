@@ -16,7 +16,8 @@
 
       inherit (config.services.desktopManager) plasma6;
     in
-    mkIf false {
+    {
+      # Force numlock on TTYs at boot
       systemd.services.numlock-on-boot = {
         enable = mkDefault true;
         description = "Enable numlock on all TTYs during early userspace";
@@ -31,6 +32,7 @@
         };
       };
 
+      # Set numlock to be on by default in KDE session
       systemd.user.services.kdenumlock = mkIf plasma6.enable {
         wantedBy = [ "sysinit-reactivation.target" ];
         serviceConfig = {

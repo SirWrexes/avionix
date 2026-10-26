@@ -2,7 +2,7 @@
 {
   flake.nixosModules.hosts =
     { lib, config, ... }:
-    lib.mkIf (config.host == "artemis" && false) {
+    lib.mkIf (config.host == "artemis") {
       powerManagement.enable = true;
 
       hardware.nvidia.powerManagement.enable = true;

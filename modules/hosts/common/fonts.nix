@@ -6,7 +6,7 @@
       config,
       ...
     }:
-    lib.mkIf false {
+    {
       fonts = {
         packages = with pkgs; [
           corefonts

@@ -22,32 +22,32 @@
         identityPaths = [ "${user.home}/.ssh/id_ed25519" ];
       };
 
-      # age.secrets =
-      #   let
-      #     gpgSecrets =
-      #       map
-      #         (file: rec {
-      #           name = "gpg/${file}";
-      #           value = {
-      #             file = "${dirs.secrets}/${name}.age";
-      #             owner = user.name;
-      #           };
-      #         })
-      #         [
-      #           "${gpgFingerprint}.pub"
-      #           "${gpgFingerprint}.prv"
-      #           "ownertrust"
-      #         ];
-      #   in
-      #   listToAttrs gpgSecrets;
-      #
-      # programs.gnupg = {
-      #   agent.enable = true;
-      #   ownertrust = secrets."gpg/ownertrust".path;
-      #   keys.${gpgFingerprint} = {
-      #     private = secrets."gpg/${gpgFingerprint}.prv".path;
-      #     public = secrets."gpg/${gpgFingerprint}.pub".path;
-      #   };
-      # };
+      age.secrets =
+        let
+          gpgSecrets =
+            map
+              (file: rec {
+                name = "gpg/${file}";
+                value = {
+                  file = "${dirs.secrets}/${name}.age";
+                  owner = user.name;
+                };
+              })
+              [
+                "${gpgFingerprint}.pub"
+                "${gpgFingerprint}.prv"
+                "ownertrust"
+              ];
+        in
+        listToAttrs gpgSecrets;
+
+      programs.gnupg = {
+        agent.enable = true;
+        ownertrust = secrets."gpg/ownertrust".path;
+        keys.${gpgFingerprint} = {
+          private = secrets."gpg/${gpgFingerprint}.prv".path;
+          public = secrets."gpg/${gpgFingerprint}.pub".path;
+        };
+      };
     };
 }

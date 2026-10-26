@@ -17,7 +17,7 @@
     in
     {
       programs.firefox = {
-        enable = false;
+        enable = true;
         package = with if cudaSupport then pkgsWithoutCuda else pkgs; firefox;
       };
     };
