@@ -13,11 +13,13 @@
     in
     mkIf (config.host == "artemis") {
       programs.me3.profiles."Seamless Co-op".settings = {
+        enable = false;
+
         supports = [ "eldenring" ];
 
-        natives = with pkgs.me3Packages; {
+        natives = with pkgs.me3Packages.eldenring; {
           ersc = {
-            path = er-seamless-coop.override { settings.cooppassword = "4"; };
+            path = seamless-coop.override { settings.cooppassword = "4"; };
             load_early = true;
           };
         };

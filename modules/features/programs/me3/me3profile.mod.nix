@@ -10,9 +10,6 @@
 let
   inherit (lib)
     attrValues
-    escapeShellArg
-    mapAttrs
-    mapAttrsToList
     mkEnableOption
     mkIf
     mkOption
