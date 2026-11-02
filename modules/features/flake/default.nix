@@ -48,17 +48,11 @@
         };
       };
 
-      config =
-        let
+      config = {
+        environment.variables = rec {
           FLAKE_HOME = "${cfg.root}";
-        in
-        {
-          environment.variables = {
-            inherit FLAKE_HOME;
-            FLAKE_PACKAGES = "${FLAKE_HOME}#packages";
-          };
-
-          environment.sessionVariables.NIX_CONF_DIR = FLAKE_HOME;
+          FLAKE_PACKAGES = "${FLAKE_HOME}#packages";
         };
+      };
     };
 }
