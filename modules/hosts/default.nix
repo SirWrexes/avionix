@@ -50,7 +50,23 @@
           cleanOnBoot = mkDefault true;
         };
 
-        #         security.sudo.package = mkDefault (pkgs.sudo.override { withInsults = true; });
+        # If /tmp is on RAM, move nix's temp dir for shells and builds to somewhere else on disk
+        environment.sessionVariables.TMPDIR = mkIf config.boot.tmp.useTmpfs (mkDefault "/var/tmp/nix");
+        systemd.tmpfiles.settings."99-nix-tmpdir" =
+          let
+            TMPDIR = config.environment.sessionVariables.TMPDIR or "";
+          in
+          mkIf (TMPDIR != "") ({
+            ${TMPDIR}.d = {
+              group = "users";
+              mode = "0755";
+              user = "${user.name}";
+              age = mkDefault "7d"; # Clean orphaned contents older than 7 days
+            };
+          });
+
+        # Le funny disrespect when I input le wrong password on accident
+        security.sudo.package = mkDefault (pkgs.sudo.override { withInsults = true; });
       };
     };
 
