@@ -16,6 +16,7 @@
     let
       inherit (lib)
         mkDefault
+        mkIf
         mkOption
         types
         ;
@@ -39,7 +40,10 @@
         networking.hostName = mkDefault config.host;
         networking.networkmanager.enable = mkDefault true;
 
-        # boot.kernelPackages = mkDefault pkgs.linuxPackages_xanmod_latest;
+        # Use Xanmod kernel
+        boot.kernelPackages = mkDefault pkgs.linuxPackages_xanmod_latest;
+
+        # Make /tmp use RAM instead of disk
         boot.tmp = {
           useTmpfs = mkDefault true;
           tmpfsSize = mkDefault "50%";
