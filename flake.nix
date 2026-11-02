@@ -2,10 +2,7 @@ rec {
   description = "🛫 Avionix — Dotfiles from outer space";
 
   inputs = {
-    # TODO: Switch to using this ASAP
-    # nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
-
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
