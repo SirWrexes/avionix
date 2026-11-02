@@ -2,6 +2,7 @@
   self,
   inputs,
   hosts,
+  description,
   ...
 }:
 {
@@ -18,6 +19,8 @@
         mkOption
         types
         ;
+
+      inherit (config.users) user;
     in
     {
       options.host = mkOption {
@@ -25,6 +28,12 @@
       };
 
       config = {
+        flake = {
+          self = mkDefault self;
+          name = mkDefault description;
+          root = mkDefault "${user.home}/.config/nixos";
+        };
+
         users.user = mkDefault self.users.wrexes;
 
         networking.hostName = mkDefault config.host;
