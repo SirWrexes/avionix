@@ -60,15 +60,16 @@ writeShellApplication {
       exit 1
     fi
 
-    fd "$SEARCH_ROOT" --type f "$@" | awk -F'/' ${escapeShellArg ''
+    fd . "$SEARCH_ROOT" --type f "$@" | awk -F'/' ${escapeShellArg ''
       {
         name=$NF
         paths[name] = paths[name] ? paths[name] "\n  " $0 : $0
         count[name]++
-      } END {
+      }
+      END {
         for (n in count) if (count[n] > 1) {
           print "Duplicate name: " n
-          print " " path[n]
+          print " " paths[n]
           print ""
         }
       }
