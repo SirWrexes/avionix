@@ -1,12 +1,11 @@
 with builtins;
 let
-
   wrexes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEeZ2bPiL1z9knSjESgr+nZKzyPSDdmoG5OGrFKFltpC";
 
   recursiveMerge = foldl' (acc: x: acc // x) { };
 
-  # Takes a set of arbitrary depths, and transforms its paths to `dir.secrets = [ "file1" "file2" ]`
-  # into a flat set of `{ "some/arbitrary/depth/path/to/dir.age".publicKeys = [ wrexes ] }`.
+  # Takes a set of arbitrary depths, and transforms its paths to `arbitrary.depth.dir.secrets = [ "file1" "file2" ]`
+  # into a flat set of `{ "arbitrary/depth/dir.age".publicKeys = [ wrexes ] }`.
   transform' =
     prefix: set:
     let

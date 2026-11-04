@@ -20,6 +20,8 @@
       ...
     }:
     let
+      inherit (pkgs.stdenv.hostPlatform) system;
+
       cfg = config.programs.battlenet;
     in
     {
@@ -27,7 +29,7 @@
 
       config = lib.mkIf cfg.enable {
         nixpkgs.config.allowUnfree = true;
-        environment.systemPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.battle-net ];
+        environment.systemPackages = [ self.packages.${system}.battle-net ];
       };
     };
 
