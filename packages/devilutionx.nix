@@ -1,4 +1,6 @@
 {
+  lib,
+
   symlinkJoin,
   makeWrapper,
 
@@ -6,16 +8,17 @@
 
   gameFiles ? [ ],
 }:
-
+let
+  inherit (lib)
+    baseNameOf
+    concatMapStringsSep
+    ;
+in
 symlinkJoin {
   name = "devilutionx";
   paths = [ devilutionx ];
   buildInputs = [ makeWrapper ];
-  postBuild =
-    let
-      linkPack = pack: "ln -s ${pack} $out/share/diasurgical/devilutionx/${builtins.baseNameOf pack}";
-    in
-    ''
-      ${builtins.concatStringsSep "\n" (builtins.map linkPack gameFiles)}
-    '';
+  postBuild = concatMapStringsSep "\n" (
+    pack: "ln -s ${pack} $out/share/diasurgical/devilutionx/${baseNameOf pack}"
+  ) gameFiles;
 }
