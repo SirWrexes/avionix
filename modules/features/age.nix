@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.nixosModules.age =
     {

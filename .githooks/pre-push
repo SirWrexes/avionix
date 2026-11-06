@@ -2,10 +2,9 @@
 #  kate: syntax bash;
 
 set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
 
-cd "$(git rev-parse --show-toplevel | tr -d '\n')"
-
-FLAKE_REV="$(git rev-parse HEAD | tr -d '\n')"
+FLAKE_REV="$(git rev-parse HEAD)"
 
 BUILD_DIR="build/docs"
 FEATURES_DIR="modules/features"
@@ -15,28 +14,37 @@ DOCS_GENERATED="$FEATURES_DIR/README.md"
 
 export FLAKE_REV
 
+if git diff --quiet --staged origin/main -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED"; then
+  echo "🤷 No committed change in $FEATURES_DIR. Docs won't be generated."
+  exit 0
+fi
+
+# Some files might be partially committed.
+# We want to run the docs generation on only the parts that are going to be pushed, so we stash the rest.
 HAS_STASH=0
 if [ -n "$(git status --porcelain -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED")" ]; then
-  git stash push --keep-index -u -m "pre-push-autostash" --quiet || true
+  echo "📥 Stash changes not staged"
+  git stash push --quiet --keep-index -u -m "pre-push-autostash" || true
   HAS_STASH=1
 fi
 
-trap 'if [ "$HAS_STASH" -eq 1 ]; then git stash pop --quiet || true; fi' EXIT
+trap '
+if [ "$HAS_STASH" -eq 1 ]; then
+  echo "📤 Pop it like it'"'"'s hot"
+  git stash pop --quiet || true;
+fi
+' EXIT
 
-echo "🔨 Building latest flake docs..."
+echo "🔨 Build latest flake module docs"
 nix --extra-experimental-features "flakes nix-command" \
   build .#docs.optionsCommonMark \
-  --impure \
   --offline \
-  --verbose \
+  --impure \
   -o "$DOCS_MARKDOWN"
 
-cp -L "$DOCS_MARKDOWN" "$DOCS_GENERATED"
+echo "📝 Overwrite old docs"
+cat "$DOCS_MARKDOWN" >"$DOCS_GENERATED"
 
-if git diff --quiet -- "$DOCS_GENERATED"; then
-  echo "✨ Docs are up to date."
-else
-  echo "📦 Committing changes..."
-  git add -- "$DOCS_GENERATED"
-  git commit -m "docs(modules): Auto-generate module docs" -- "$DOCS_GENERATED"
-fi
+echo "📦 Commit doc changes"
+git add -- "$DOCS_GENERATED"
+git commit -m "doc(modules): Auto-generate docs" -- "$DOCS_GENERATED"
