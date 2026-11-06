@@ -16,7 +16,7 @@ DOCS_GENERATED="$FEATURES_DIR/README.md"
 export FLAKE_REV
 
 HAS_STASH=0
-if [ -n "$(.git status --porcelain -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED")" ]; then
+if [ -n "$(git status --porcelain -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED")" ]; then
   git stash push --keep-index -u -m "pre-push-autostash" --quiet || true
   HAS_STASH=1
 fi
