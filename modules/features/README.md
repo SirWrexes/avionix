@@ -24,7 +24,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/bash.nix)
+ - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/bash.nix)
 
 
 
@@ -48,7 +48,7 @@ pkgs.shfmt
 ```
 
 *Declared by:*
- - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/bash.nix)
+ - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/bash.nix)
 
 
 
@@ -72,7 +72,7 @@ pkgs.bash-language-server
 ```
 
 *Declared by:*
- - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/bash.nix)
+ - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/bash.nix)
 
 
 
@@ -96,7 +96,7 @@ pkgs.shellcheck
 ```
 
 *Declared by:*
- - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/bash.nix)
+ - [modules/features/dev/bash\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/bash.nix)
 
 
 
@@ -128,7 +128,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/dev/nix\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/nix.nix)
+ - [modules/features/dev/nix\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/nix.nix)
 
 
 
@@ -152,7 +152,7 @@ pkgs.nixfmt
 ```
 
 *Declared by:*
- - [modules/features/dev/nix\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/nix.nix)
+ - [modules/features/dev/nix\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/nix.nix)
 
 
 
@@ -176,7 +176,7 @@ pkgs.nil
 ```
 
 *Declared by:*
- - [modules/features/dev/nix\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/dev/nix.nix)
+ - [modules/features/dev/nix\.nix, via option flake\.nixosModules\.dev](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/dev/nix.nix)
 
 
 
@@ -202,7 +202,7 @@ list of (submodule)
 ```
 
 *Declared by:*
- - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/display.nix)
+ - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/display.nix)
 
 
 
@@ -226,7 +226,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/display.nix)
+ - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/display.nix)
 
 
 
@@ -250,7 +250,7 @@ positive integer, meaning >0
 ```
 
 *Declared by:*
- - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/display.nix)
+ - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/display.nix)
 
 
 
@@ -282,7 +282,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/display.nix)
+ - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/display.nix)
 
 
 
@@ -306,7 +306,7 @@ positive integer, meaning >0
 ```
 
 *Declared by:*
- - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/display.nix)
+ - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/display.nix)
 
 
 
@@ -330,7 +330,7 @@ positive integer, meaning >0
 ```
 
 *Declared by:*
- - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/display.nix)
+ - [modules/features/display\.nix, via option flake\.nixosModules\.desktop](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/display.nix)
 
 
 
@@ -362,7 +362,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -388,7 +388,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -420,7 +420,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -447,7 +447,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -471,7 +471,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -503,7 +503,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -552,7 +552,7 @@ attribute set of string
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -572,11 +572,11 @@ absolute path
 *Default:*
 
 ```nix
-"/nix/store/c6m33x481c0y7pmarr0awxcqbfpjird2-r017jx1aq1xs9ffqhgj8xds89vxpmx0j-source/assets/icons/nixos.png"
+"/nix/store/0mcb730dhihzbm3yy30a238krlpnsz0q-jcjpg7b8ayjvjrmzb7dplbx4qc8wgi32-source/assets/icons/nixos.png"
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -600,7 +600,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -624,7 +624,7 @@ unsigned integer, meaning >=0
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -648,7 +648,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/auto-update.nix)
+ - [modules/features/flake/auto-update\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/auto-update.nix)
 
 
 
@@ -672,7 +672,7 @@ string matching the pattern ^$|^\[\[:alnum:]](\[\[:alnum:]_-]{0,61}\[\[:alnum:]]
 ```
 
 *Declared by:*
- - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/default.nix)
+ - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/default.nix)
 
 
 
@@ -700,7 +700,7 @@ false
 ```
 
 *Declared by:*
- - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/kateproject.nix)
+ - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/kateproject.nix)
 
 
 
@@ -724,7 +724,7 @@ pkgs.nil
 ```
 
 *Declared by:*
- - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/kateproject.nix)
+ - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/kateproject.nix)
 
 
 
@@ -748,7 +748,7 @@ list of string
 ```
 
 *Declared by:*
- - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/kateproject.nix)
+ - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/kateproject.nix)
 
 
 
@@ -773,7 +773,7 @@ attribute set of (JSON value)
 ```
 
 *Declared by:*
- - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/kateproject.nix)
+ - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/kateproject.nix)
 
 
 
@@ -822,7 +822,7 @@ attribute set of (JSON value)
 ```
 
 *Declared by:*
- - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/kateproject.nix)
+ - [modules/features/flake/kateproject\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/kateproject.nix)
 
 
 
@@ -854,7 +854,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/default.nix)
+ - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/default.nix)
 
 
 
@@ -886,7 +886,7 @@ absolute path not in the Nix store
 ```
 
 *Declared by:*
- - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/default.nix)
+ - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/default.nix)
 
 
 
@@ -912,7 +912,7 @@ lazy attribute set of anything
 ```
 
 *Declared by:*
- - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/flake/default.nix)
+ - [modules/features/flake/default\.nix, via option flake\.nixosModules\.flake](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/flake/default.nix)
 
 
 
@@ -948,7 +948,7 @@ nf: with nf; [
 ```
 
 *Declared by:*
- - [modules/features/fonts\.nix, via option flake\.nixosModules\.fonts](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/fonts.nix)
+ - [modules/features/fonts\.nix, via option flake\.nixosModules\.fonts](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/fonts.nix)
 
 
 
@@ -980,7 +980,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/games/devilutionx\.nix, via option flake\.nixosModules\.games](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/games/devilutionx.nix)
+ - [modules/features/games/devilutionx\.nix, via option flake\.nixosModules\.games](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/games/devilutionx.nix)
 
 
 
@@ -1018,7 +1018,7 @@ list of (string or absolute path)
 ```
 
 *Declared by:*
- - [modules/features/games/devilutionx\.nix, via option flake\.nixosModules\.games](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/games/devilutionx.nix)
+ - [modules/features/games/devilutionx\.nix, via option flake\.nixosModules\.games](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/games/devilutionx.nix)
 
 
 
@@ -1058,7 +1058,7 @@ attribute set of (submodule)
 ```
 
 *Declared by:*
- - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/gnupg/secrets.nix)
+ - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/gnupg/secrets.nix)
 
 
 
@@ -1090,7 +1090,7 @@ config.age.secrets."273ED719F8D1F17F28F92AE14CEBB3E827CABB7E.prv".path
 ```
 
 *Declared by:*
- - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/gnupg/secrets.nix)
+ - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/gnupg/secrets.nix)
 
 
 
@@ -1122,7 +1122,7 @@ config.age.secrets."273ED719F8D1F17F28F92AE14CEBB3E827CABB7E.pub".path
 ```
 
 *Declared by:*
- - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/gnupg/secrets.nix)
+ - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/gnupg/secrets.nix)
 
 
 
@@ -1154,7 +1154,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/gnupg/secrets.nix)
+ - [modules/features/programs/gnupg/secrets\.nix, via option flake\.nixosModules\.secrets](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/gnupg/secrets.nix)
 
 
 
@@ -1179,7 +1179,7 @@ attribute set of (submodule)
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1211,7 +1211,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1235,7 +1235,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1267,7 +1267,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1291,7 +1291,7 @@ submodule
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1316,7 +1316,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1341,7 +1341,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1366,7 +1366,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1392,7 +1392,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1422,7 +1422,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1447,7 +1447,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1474,7 +1474,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1498,7 +1498,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1524,7 +1524,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1549,7 +1549,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1575,7 +1575,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1600,7 +1600,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1624,7 +1624,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1651,7 +1651,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1683,7 +1683,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1709,7 +1709,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1740,7 +1740,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1765,7 +1765,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1790,7 +1790,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1815,7 +1815,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1840,7 +1840,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1873,7 +1873,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1906,7 +1906,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1930,7 +1930,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1955,7 +1955,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -1980,7 +1980,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -2023,7 +2023,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -2048,7 +2048,7 @@ string
 ```
 
 *Declared by:*
- - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/programs/steam/default.nix)
+ - [modules/features/programs/steam/default\.nix, via option flake\.nixosModules\.programs](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/programs/steam/default.nix)
 
 
 
@@ -2072,7 +2072,7 @@ null
 ```
 
 *Declared by:*
- - [modules/features/services/input-remapper\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/services/input-remapper.nix)
+ - [modules/features/services/input-remapper\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/services/input-remapper.nix)
 
 
 
@@ -2104,7 +2104,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/services/razerbat.nix)
+ - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/services/razerbat.nix)
 
 
 
@@ -2128,7 +2128,7 @@ pkgs.razerbat
 ```
 
 *Declared by:*
- - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/services/razerbat.nix)
+ - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/services/razerbat.nix)
 
 
 
@@ -2163,7 +2163,7 @@ string or list of string
 ```
 
 *Declared by:*
- - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/services/razerbat.nix)
+ - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/services/razerbat.nix)
 
 
 
@@ -2197,7 +2197,7 @@ string or list of string
 ```
 
 *Declared by:*
- - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/services/razerbat.nix)
+ - [modules/features/services/razerbat\.nix, via option flake\.nixosModules\.services](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/services/razerbat.nix)
 
 
 
@@ -2229,7 +2229,7 @@ true
 ```
 
 *Declared by:*
- - [modules/features/scripts\.nix, via option flake\.nixosModules\.scripts](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/scripts.nix)
+ - [modules/features/scripts\.nix, via option flake\.nixosModules\.scripts](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/scripts.nix)
 
 
 
@@ -2254,6 +2254,6 @@ null
 ```
 
 *Declared by:*
- - [modules/features/user\.nix, via option flake\.nixosModules\.user](https://github.com/SirWrexes/avionix/blob/c96e899e7cd8218abdd48483354df5cfc8a366ab/modules/features/user.nix)
+ - [modules/features/user\.nix, via option flake\.nixosModules\.user](https://github.com/SirWrexes/avionix/blob/4c4ae84f054b746d3f1fee961261208e25a3c58d/modules/features/user.nix)
 
 
