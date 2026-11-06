@@ -29,7 +29,6 @@
         types
         ;
 
-      user = config.users.user or { home = "$HOME"; };
       cfg = config.programs.steam;
 
       steamAppIdRegex = "^[1-9][[:digit:]]+$";
@@ -51,12 +50,15 @@
         dirs = {
           steam = mkOption {
             type = with types; str;
-            default = "${user.home}/.steam/steam";
+            default = "$HOME/.steam/steam";
+            description = ''
+              Path to your Steam root.
+              This doesn't change where Steam is installed, rather it is used by scripts in this module to find the things it needs.
+            '';
           };
           steamapps = mkOption {
             type = with types; str;
-            default = "${cfg.dirs.steam}/steamapps";
-            readOnly = true;
+            internal = true;
           };
         };
         apps = mkOption {
@@ -75,6 +77,7 @@
       };
 
       # TODO: Check if I can reduce the number of passes over cfg.apps with lib.mapAttrsOfSubmodule
+      # TODO: Make some mechanism that'll retry applying protontricks if the game wasn't installed yet at config time.
       config = mkIf cfg.enable {
         assertions = [
           (
@@ -96,6 +99,8 @@
             }
           )
         ];
+
+        programs.steam.dirs.steamapps = "${cfg.dirs.steam}/steamapps";
 
         systemd.user.services.steam-apply-launch-options =
           let
@@ -141,7 +146,7 @@
             scripts = foldlAttrs (
               acc: id: { protontricks, ... }: acc ++ (optional protontricks.enable protontricks.script)
             ) [ ] cfg.apps;
-            enable = cfg.protontricks.enable && (length scripts > 0);
+            enable = cfg.protontricks.enable && (scripts != [ ]);
           in
           mkIf enable {
             serviceConfig = {

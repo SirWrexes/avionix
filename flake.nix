@@ -20,23 +20,30 @@ rec {
       import-tree,
       ...
     }@inputs:
-    flake-parts.lib.mkFlake {
-      inherit inputs;
+    flake-parts.lib.mkFlake
+      {
+        inherit inputs;
 
-      specialArgs = {
-        inherit description;
+        specialArgs = {
+          inherit description;
 
-        hosts = [ "artemis" ];
+          hosts = [ "artemis" ];
 
-        dirs = rec {
-          root = ./.;
-          assets = "${root}/assets";
-          icons = "${assets}/icons";
-          hosts = "${root}/hosts";
-          secrets = "${root}/secrets";
-          packages = "${root}/packages";
-          scripts = "${packages}/scripts";
+          dirs = rec {
+            root = ./.;
+            assets = "${root}/assets";
+            icons = "${assets}/icons";
+            hosts = "${root}/hosts";
+            secrets = "${root}/secrets";
+            packages = "${root}/packages";
+            scripts = "${packages}/scripts";
+          };
         };
-      };
-    } (import-tree.filterNot (nixpkgs.lib.hasSuffix ".mod.nix") ./modules);
+      }
+      (
+        import-tree.filterNot (nixpkgs.lib.hasSuffix ".mod.nix") [
+          ./modules
+          ./devShells
+        ]
+      );
 }

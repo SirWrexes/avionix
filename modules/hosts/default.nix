@@ -11,6 +11,7 @@
       pkgs,
       lib,
       config,
+      options,
       ...
     }:
     let
@@ -18,18 +19,18 @@
         mkDefault
         mkIf
         mkOption
-        types
         ;
 
       inherit (config.users) user;
     in
     {
       options.host = mkOption {
-        type = with types; enum hosts;
+        type = options.networking.hostName.type;
       };
 
       config = {
         flake = {
+          host = config.host;
           self = mkDefault self;
           name = mkDefault description;
           root = mkDefault "${user.home}/.config/nixos";
@@ -61,7 +62,7 @@
               group = "users";
               mode = "0755";
               user = "${user.name}";
-              age = mkDefault "7d"; # Clean orphaned contents older than 7 days
+              age = mkDefault "3d";
             };
           });
 
@@ -82,7 +83,11 @@
         name = host;
         value = nixosSystem {
           modules = [
+            inputs.agenix.nixosModules.default
             self.nixosModules.default
+            self.nixosModules.hosts
+            self.nixosModules.age
+            self.nixosModules.pkgsNoCuda
             {
               inherit host;
               imports = [ self.hardwareConfigs.${host} ];

@@ -12,6 +12,7 @@
           enable = true;
           protontricks.enable = true;
           remotePlay.openFirewall = true;
+          localNetworkGameTransfers.openFirewall = true;
         };
 
         battlenet.enable = true;

@@ -28,7 +28,6 @@
       options.programs.battlenet.enable = lib.mkEnableOption "Battle.net";
 
       config = lib.mkIf cfg.enable {
-        nixpkgs.config.allowUnfree = true;
         environment.systemPackages = [ self.packages.${system}.battle-net ];
       };
     };

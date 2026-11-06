@@ -1,0 +1,42 @@
+#! /usr/bin/env bash
+#  kate: syntax bash;
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel | tr -d '\n')"
+
+FLAKE_REV="$(git rev-parse HEAD | tr -d '\n')"
+
+BUILD_DIR="build/docs"
+FEATURES_DIR="modules/features"
+
+DOCS_MARKDOWN="$BUILD_DIR/options.md"
+DOCS_GENERATED="$FEATURES_DIR/README.md"
+
+export FLAKE_REV
+
+HAS_STASH=0
+if [ -n "$(.git status --porcelain -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED")" ]; then
+  git stash push --keep-index -u -m "pre-push-autostash" --quiet || true
+  HAS_STASH=1
+fi
+
+trap 'if [ "$HAS_STASH" -eq 1 ]; then git stash pop --quiet || true; fi' EXIT
+
+echo "🔨 Building latest flake docs..."
+nix --extra-experimental-features "flakes nix-command" \
+  build .#docs.optionsCommonMark \
+  --impure \
+  --offline \
+  --verbose \
+  -o "$DOCS_MARKDOWN"
+
+cp -L "$DOCS_MARKDOWN" "$DOCS_GENERATED"
+
+if git diff --quiet -- "$DOCS_GENERATED"; then
+  echo "✨ Docs are up to date."
+else
+  echo "📦 Committing changes..."
+  git add -- "$DOCS_GENERATED"
+  git commit -m "docs(modules): Auto-generate module docs" -- "$DOCS_GENERATED"
+fi

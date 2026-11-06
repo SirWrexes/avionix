@@ -1,18 +1,15 @@
 { lib, ... }:
 let
   inherit (lib)
-    fixedWidthString
-    mkOption
-    optionalString
-    replaceString
-    ;
-
-  inherit (builtins)
     concatStringsSep
     elemAt
+    fixedWidthString
     foldl'
-    isNull
     map
+    mkOption
+    optional
+    optionalString
+    replaceString
     stringLength
     ;
 
@@ -78,13 +75,13 @@ let
     let
       names = map ({ name, ... }: name) values;
       width = longestElementLength names;
-      descriptions = map ({ name, desc }: "${padRight width name} -> desc") values;
+      descriptions = map ({ name, desc }: "${padRight width name} -> ${desc}") values;
     in
     {
       inherit check;
       option = mkOption {
         type = with types; nullOr (enum names);
-        description = concatStringsSep "\n" descriptions;
+        description = concatStringsSep "  \n" descriptions;
       };
     };
 
@@ -98,10 +95,10 @@ let
       inherit check;
       option = mkOption {
         type = with types; nullOr bool;
-        description = ''
-          enabled  -> ${yes}
-          disabled -> ${no}
-        '';
+        description = concatStringsSep "  \n" [
+          "enabled  -> ${yes}"
+          "disabled -> ${no}"
+        ];
         apply =
           value:
           if isNull value then
@@ -127,10 +124,13 @@ let
       inherit check;
       option = mkOption {
         type = with types; if hasForce then nullOr (either bool forceStr) else nullOr bool;
-        description = ''
-          enabled  -> ${on}
-          disabled -> ${off}${optionalString hasForce "\nforce    -> ${force}"}
-        '';
+        description = concatStringsSep "  \n" (
+          [
+            "enabled  -> ${on}"
+            "disabled -> ${off}"
+          ]
+          ++ (optional hasForce "force    -> ${force}")
+        );
         apply =
           value:
           if (isNull value || value == "force") then

@@ -9,14 +9,14 @@
     }:
     let
       inherit (lib) types;
-      inherit (config) host flake;
+      inherit (config) flake;
 
       cfg = config.flake.autoUpdate;
 
       service = "update-flake-inputs";
 
       nix = lib.getExe config.nix.package;
-      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flake.root}#${host}";
+      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flake.root}#${flake.host}";
     in
     {
       # Took a couple hours to write this whole module subsection only to find out afterwards about `system.autoUpgrade`.
@@ -78,17 +78,23 @@
           message = lib.mkOption {
             type = with types; str;
             default = "Your flake inputs have been updated.";
+            description = ''
+              Message to display on the notification.
+            '';
           };
 
           icon = lib.mkOption {
             type = with types; path;
             default = "${dirs.icons}/nixos.png";
+            description = ''
+              Icon for the notification.
+            '';
           };
 
           timeout = lib.mkOption {
             type = with types; ints.unsigned;
-            description = "Duration of the notification (in miliseconds)";
             default = 0;
+            description = "Duration of the notification (in miliseconds)";
             apply = builtins.toString;
           };
 
@@ -139,76 +145,70 @@
                 action: script: pkgs.writeShellScript "${service}.action.${kebabify action}.script" script
               );
           };
+        };
+      };
 
-          command = lib.mkOption {
-            readOnly = true;
-            default =
-              with cfg.notification;
-              let
-                actionList = lib.attrsToList actions;
-                actionNames = builtins.attrNames actions;
-                hasActions = builtins.length actionList > 0;
+      config = lib.mkIf cfg.enable {
+        systemd.user.services.${service} = {
+          script =
+            let
+              inherit (cfg)
+                commit
+                notification
+                preRunHook
+                ;
 
-                actionFlags = builtins.map (action: ''--action="${action}=${action}"'') actionNames;
-                actionFlagsStr = builtins.concatStringsSep "\\\n" actionFlags;
+              actionList = lib.attrsToList notification.actions;
+              actionNames = builtins.attrNames notification.actions;
+              hasActions = builtins.length actionList > 0;
 
-                actionFlagCases = builtins.map ({ name, value }: ''
-                  "${name}") "${value}" ;;
-                '') actionList;
-                actionFlagsSwitch = ''
-                  {
-                    read -r action
-                    case "$action" in
-                      ${builtins.concatStringsSep "\n" actionFlagCases}
-                    esac
-                  }
-                '';
-              in
-              pkgs.writeShellScript "${service}.actions.command" ''
+              actionFlags = builtins.map (action: ''--action="${action}=${action}"'') actionNames;
+              actionFlagsStr = builtins.concatStringsSep "\\\n" actionFlags;
+
+              actionFlagCases = builtins.map ({ name, value }: ''
+                "${name}") "${value}" ;;
+              '') actionList;
+              actionFlagsSwitch = ''
+                {
+                  read -r action
+                  case "$action" in
+                    ${builtins.concatStringsSep "\n" actionFlagCases}
+                  esac
+                }
+              '';
+
+              command = pkgs.writeShellScript "${service}.actions.command" ''
                 ${lib.getExe pkgs.libnotify} \
-                  --expire-time ${timeout} \
-                  --icon ${icon} \
+                  --expire-time ${notification.timeout} \
+                  --icon ${notification.icon} \
                   --app-name NixOS \
                   "Flake inputs updated" ${lib.optionalString hasActions ''
                     \
                     ${actionFlagsStr} | ${actionFlagsSwitch}
                   ''}
               '';
-          };
-        };
-
-        script = lib.mkOption {
-          type = with types; str;
-          description = "Final script ran by the auto-update service";
-          readOnly = true;
-          default = with cfg; ''
-            if ! ${preRunHook}; then
-              echo "info: Update aborted by pre-run hook." 2>&1
-              exit
-            fi
-
-            if ! ${command}; then
-              echo "error: Something went wrong during update" 2>&1
-              exit 1
-            fi
-
-            ${lib.optionalString commit.enable ''
-              if ! ${commit.command}; then
-                echo "error: Something went wrong when committing the update" 2>&1
+            in
+            ''
+              if ! ${preRunHook}; then
+                echo "info: Update aborted by pre-run hook." 2>&1
+                exit
               fi
-            ''}
 
-            ${lib.optionalString notification.enable "nohup ${notification.command} >/dev/null 2>&1 &"}
-          '';
-        };
-      };
+              if ! ${command}; then
+                echo "error: Something went wrong during update" 2>&1
+                exit 1
+              fi
 
-      config = lib.mkIf cfg.enable {
-        systemd.user.services.${service} = {
-          inherit (cfg) script;
+              ${lib.optionalString commit.enable ''
+                if ! ${commit.command}; then
+                  echo "error: Something went wrong when committing the update" 2>&1
+                fi
+              ''}
+
+              ${lib.optionalString notification.enable "nohup ${command} >/dev/null 2>&1 &"}
+            '';
           description = "Updates `${flake.root}`'s inputs.";
           serviceConfig.Type = "oneshot";
-
         };
 
         systemd.user.timers.${service} = {

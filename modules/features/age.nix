@@ -11,8 +11,6 @@
       cfg = config.age;
     in
     {
-      imports = [ inputs.agenix.nixosModules.default ];
-
       options.age =
         let
           inherit (lib) mkOption types;

@@ -16,6 +16,7 @@
       options.users.user = mkOption {
         type = with types; nullOr options.users.users.type.nestedTypes.elemType;
         default = null;
+        visible = "shallow";
         description = ''
           Main user of the config.
           Will take care of defining the corresponding `users.users.<name>` entry.

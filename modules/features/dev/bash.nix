@@ -17,7 +17,7 @@
     in
     {
       options.dev.bash = {
-        enable = mkEnableOption "Devtools for Nix" // {
+        enable = mkEnableOption "Devtools for Bash" // {
           default = true;
         };
         languageServer = mkPackageOption pkgs "bash-language-server" { };

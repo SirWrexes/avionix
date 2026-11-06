@@ -27,13 +27,17 @@
         ;
 
       inherit (pkgs.stdenv.hostPlatform) system;
-      inherit (config) host;
       inherit (config.programs) nh;
 
       oneLiner = with types; addCheck str (s: !(hasInfix "\n" s));
 
       cfg = config.flake;
       EDITOR = config.environment.sessionVariables.EDITOR or "";
+      devnix =
+        config.dev.nix or {
+          languageServer = pkgs.nil;
+          formatter = pkgs.nixfmt;
+        };
     in
     {
       options.flake.kateproject = {
@@ -49,74 +53,68 @@
           default = (EDITOR == "kate");
         };
 
-        lspclient =
-          let
-            devnix =
-              if (config ? dev && config.dev ? nix) then
-                config.dev.nix
-              else
-                {
-                  languageServer = pkgs.nil;
-                  formatter = pkgs.nixfmt;
-                };
-          in
-          {
-            package = mkPackageOption pkgs "nil" { } // {
-              default = devnix.languageServer;
-              apply = getExe;
-            };
+        lspclient = {
+          package = mkPackageOption pkgs "nil" { } // {
+            default = devnix.languageServer;
+            apply = getExe;
+          };
 
-            args = mkOption {
-              type = with types; listOf oneLiner;
-              default = [ ];
-            };
+          args = mkOption {
+            type = with types; listOf oneLiner;
+            default = [ ];
+            description = ''
+              Arguments passed to the LSP client.
+            '';
+          };
 
-            settings = mkOption {
-              type = with types; attrsOf json;
-              default = {
-                servers.nix = {
-                  highlightingModeRegex = "^Nix$";
-                  url = "https://github.com/oxalica/nil";
-                  command = with cfg.kateproject.lspclient; [ package ] ++ args;
-                  settings.nil = {
-                    formatting.command = [ (getExe devnix.formatter) ];
-                    nix.flake = {
-                      autoArchive = true;
-                      autoEvalInputs = true;
-                    };
+          settings = mkOption {
+            type = with types; attrsOf json;
+            default = {
+              servers.nix = {
+                highlightingModeRegex = "^Nix$";
+                url = "https://github.com/oxalica/nil";
+                command = with cfg.kateproject.lspclient; [ package ] ++ args;
+                settings.nil = {
+                  formatting.command = [ (getExe devnix.formatter) ];
+                  nix.flake = {
+                    autoArchive = true;
+                    autoEvalInputs = true;
                   };
                 };
               };
-              description = ''
-                LSP settings for your editor.
-              '';
             };
-
-            extraSettings = mkOption {
-              type = with types; attrsOf json;
-              default = { };
-              description = ''
-                Extra LSP settings for your editor.
-                Will be merged with `flake.kateproject.lspSettings` using `lib.mkMerge`.
-              '';
-            };
-
-            finalSettings = mkOption {
-              type = with types; attrsOf json;
-              readOnly = true;
-              internal = true;
-              default =
-                with cfg.kateproject.lspclient;
-                mkMerge [
-                  settings
-                  extraSettings
-                ];
-            };
+            description = ''
+              LSP settings for your editor.
+            '';
           };
+
+          extraSettings = mkOption {
+            type = with types; attrsOf json;
+            default = { };
+            description = ''
+              Extra LSP settings for your editor.
+              Will be merged with `flake.kateproject.lspSettings` using `lib.mkMerge`.
+            '';
+          };
+
+          finalSettings = mkOption {
+            type = with types; attrsOf json;
+            readOnly = true;
+            internal = true;
+            default =
+              with cfg.kateproject.lspclient;
+              mkMerge [
+                settings
+                extraSettings
+              ];
+          };
+        };
       };
 
       config =
         let
+          hasNixCommand = elem "nix-command" config.nix.settings.experimental-features;
+
           mkOsTargets =
             cmd:
             (map
@@ -125,26 +123,24 @@
                 build_cmd = target;
               })
               [
-                "build -o ${escapeShellArg "build/os/${host}"}"
+                "build -o ${escapeShellArg "build/os/${cfg.host}"}"
                 "test"
                 "switch"
               ]
             );
 
           nixTargets =
-            (optional (elem "nix-command" config.nix.settings.experimental-features) [
-              {
-                name = "Update flake inputs";
-                build_cmd = "nix flake update --flake .";
-              }
-            ])
-            ++ (optional (!nh.enable) (mkOsTargets "nixos-rebuild --flake ${escapeShellArg ".#${host}"}"));
+            optional (hasNixCommand) {
+              name = "Update flake inputs";
+              build_cmd = "nix flake update --flake .";
+            }
+            ++ optionals (!nh.enable) (mkOsTargets "nixos-rebuild --flake ${escapeShellArg ".#${cfg.host}"}");
 
           nhTargets = optional (nh.enable) (
             mkOsTargets (
               concatStringsSep " " [
                 "NH_FLAKE=${escapeShellArg cfg.root}"
-                "NH_OS_FLAKE=${escapeShellArg "${cfg.root}#${host}"}"
+                "NH_OS_FLAKE=${escapeShellArg "${cfg.root}#${cfg.host}"}"
                 "NH_NOM=off"
                 "nh os"
               ]
@@ -154,7 +150,10 @@
           packageTargets =
             let
               cmd =
-                if elem "nix-command" config.nix.settings.experimental-features then "nix build" else "nix-build";
+                if hasNixCommand then
+                  "nix build"
+                else
+                  "nix-build --expr 'with builtins; (getFlake ${cfg.root}).packages.'";
             in
             map (pkg: {
               name = "Build package: ${pkg}";

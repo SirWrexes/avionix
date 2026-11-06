@@ -4,6 +4,7 @@
       pkgs,
       lib,
       config,
+      options,
       ...
     }:
     let
@@ -44,6 +45,13 @@
             Your flake's `self`.
             This option doesn't do any type checking.
             Behaviour is you provide it with anything else than your flake's `self` is undefined.
+          '';
+        };
+        host = mkOption {
+          type = options.networking.hostName.type;
+          default = config.networking.hostName;
+          description = ''
+            Target machine's name.
           '';
         };
       };

@@ -114,6 +114,9 @@ in
     settings = mkOption {
       type = with types; submodule { inherit options; };
       default = { };
+      description = ''
+        Attribute set of protontricks settings for your app.
+      '';
       apply = stripNulls;
     };
 

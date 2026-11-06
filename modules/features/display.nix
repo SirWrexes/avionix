@@ -55,13 +55,18 @@
         {
           monitors = mkOption {
             type = with types; listOf monitor;
-            description = "List of monitor info";
+            description = ''
+              List of monitor info.
+              Doesn't actually set anything, but can be used to share information to other modules.
+              Other modules can check if this module has been imported and configured with `config.display.monitorsConfigured or false`.
+            '';
             default = [ ];
           };
 
           primary = mkOption {
             type = with types; either str monitor;
             description = "Alias for display that is set with `primary = true`";
+            internal = true;
             readOnly = true;
             default = findSingle (
               m: m.primary

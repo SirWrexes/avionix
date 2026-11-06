@@ -32,6 +32,7 @@ in
         };
         package = lib.mkPackageOption self.packages.${pkgs.stdenv.hostPlatform.system} name { } // {
           readOnly = true;
+          internal = true;
         };
       }) scripts;
 
