@@ -1,60 +1,88 @@
-{ dirs, ... }:
+{ dirs, lib', ... }:
 {
   flake.nixosModules.flake =
     {
       config,
       pkgs,
-      lib,
       ...
     }:
     let
-      inherit (lib) types;
+      inherit (lib')
+        attrNames
+        attrsToList
+        concatStringsSep
+        getExe
+        literalExpression
+        mkDisableOption
+        mkEnableOption
+        mkIf
+        mkOption
+        optionalString
+        toLower
+        types
+        ;
+
+      inherit (lib'.options)
+        literalCode
+        ;
+
       inherit (config) flake;
 
       cfg = config.flake.autoUpdate;
 
       service = "update-flake-inputs";
 
-      nix = lib.getExe config.nix.package;
-      nixos-rebuild = "${lib.getExe pkgs.nixos-rebuild-ng} --flake ${flake.root}#${flake.host}";
+      nix = getExe config.nix.package;
+      nixos-rebuild = "${getExe pkgs.nixos-rebuild-ng} --flake ${flake.root}#${flake.host}";
     in
     {
       # Took a couple hours to write this whole module subsection only to find out afterwards about `system.autoUpgrade`.
       # Oh well, I like my module better anyway--not copium, I swear! 😨
       options.flake.autoUpdate = {
-        enable = lib.mkEnableOption "auto updating of flake inputs" // {
-          default = true;
+        enable = mkOption {
+          type = with types; bool;
+          description = ''
+            Wether to enable auto updating of flake inputs.
+            WARNING: This module is still untested because I keep adding 3 million TODOs and never coming back to them.
+          '';
+          default = false;
+          example = true;
         };
 
-        preRunHook = lib.mkOption {
-          type = with types; str;
-          description = "Runs before calling the update command. If it returns a non-zero value, the update is prevented.";
+        preRunHook = mkOption {
+          type = with types; lines;
+          description = ''
+            Script ran before calling the update command. If it returns a non-zero value, the update is prevented.
+          '';
           default = "true";
+          defaultText = literalCode "bash" "true";
           apply = pkgs.writeShellScript "${service}.pre-run-hook";
         };
 
-        command = lib.mkOption {
+        command = mkOption {
           type = with types; str;
-          description = "The script that will run to update inputs";
-          default = ''
-            ${nix} flake update --flake "${flake.root}"
+          description = ''
+            Command used to update flake inputs.
           '';
+          default = ''${nix} flake update --flake "${flake.root}"'';
+          defaultText = literalExpression ''
+            ''''''''${lib.getExe config.nix.package} --extra-experimental-features "flakes nix-command" flake update --flake ''${config.flake.root}''''''
+          '';
+
           apply = pkgs.writeShellScript "${service}.command";
         };
 
         commit = {
-          enable = lib.mkEnableOption "committing the lockfile after an update" // {
-            default = true;
-          };
+          enable = mkDisableOption "committing the lockfile after an update";
 
-          command = lib.mkOption {
+          command = mkOption {
             type = with types; str;
             description = "Command used to commit the updated lockfile.";
             default =
               let
                 inherit (cfg.commit) message;
 
-                git = ''${lib.getExe config.programs.git.package} -C "${flake.root}"'';
+                git = ''${getExe config.programs.git.package} -C "${flake.root}"'';
               in
               ''
                 ${git} diff --quiet           -- "${flake.root}/flake.lock" && \
@@ -63,7 +91,7 @@
             apply = pkgs.writeShellScript "${service}.commit.command";
           };
 
-          message = lib.mkOption {
+          message = mkOption {
             type = with types; str;
             description = "Message used when committing the updated lockfile.";
             default = "[AUTO] Update flake inputs";
@@ -71,11 +99,12 @@
         };
 
         notification = {
-          enable = lib.mkEnableOption "desktop notification when inputs have been updated" // {
-            default = config.desktop.enable;
+          enable = mkEnableOption "desktop notification when inputs have been updated" // rec {
+            default = config.desktop.enable or true;
+            example = !default;
           };
 
-          message = lib.mkOption {
+          message = mkOption {
             type = with types; str;
             default = "Your flake inputs have been updated.";
             description = ''
@@ -83,7 +112,7 @@
             '';
           };
 
-          icon = lib.mkOption {
+          icon = mkOption {
             type = with types; path;
             default = "${dirs.icons}/nixos.png";
             description = ''
@@ -91,14 +120,14 @@
             '';
           };
 
-          timeout = lib.mkOption {
+          timeout = mkOption {
             type = with types; ints.unsigned;
             default = 0;
             description = "Duration of the notification (in miliseconds)";
             apply = builtins.toString;
           };
 
-          actions = lib.mkOption {
+          actions = mkOption {
             type = with types; attrsOf str;
             description = ''
               Actions to provide on the notification pop-up.
@@ -106,9 +135,9 @@
             '';
             default =
               let
-                terminal = "\${TERMINAL:-${lib.getExe pkgs.kdePackages.konsole}}";
-                bash = lib.getExe pkgs.bash;
-                shell = lib.getExe (config.user.shell or config.users.defaultShell or pkgs.bash);
+                terminal = "\${TERMINAL:-${getExe pkgs.kdePackages.konsole}}";
+                bash = getExe pkgs.bash;
+                shell = getExe (config.user.shell or config.users.defaultShell or pkgs.bash);
                 switch = "${nixos-rebuild} switch";
                 dry-build = "${nixos-rebuild} dry-build";
               in
@@ -139,7 +168,7 @@
               };
             apply =
               let
-                kebabify = str: lib.toLower (builtins.replaceStrings [ " " ] [ "-" ] str);
+                kebabify = str: toLower (builtins.replaceStrings [ " " ] [ "-" ] str);
               in
               builtins.mapAttrs (
                 action: script: pkgs.writeShellScript "${service}.action.${kebabify action}.script" script
@@ -148,7 +177,7 @@
         };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = mkIf cfg.enable {
         systemd.user.services.${service} = {
           script =
             let
@@ -158,31 +187,31 @@
                 preRunHook
                 ;
 
-              actionList = lib.attrsToList notification.actions;
-              actionNames = builtins.attrNames notification.actions;
-              hasActions = builtins.length actionList > 0;
+              actionList = attrsToList notification.actions;
+              actionNames = attrNames notification.actions;
+              hasActions = actionList != [ ];
 
-              actionFlags = builtins.map (action: ''--action="${action}=${action}"'') actionNames;
-              actionFlagsStr = builtins.concatStringsSep "\\\n" actionFlags;
+              actionFlags = map (action: ''--action="${action}=${action}"'') actionNames;
+              actionFlagsStr = concatStringsSep "\\\n" actionFlags;
 
-              actionFlagCases = builtins.map ({ name, value }: ''
+              actionFlagCases = map ({ name, value }: ''
                 "${name}") "${value}" ;;
               '') actionList;
               actionFlagsSwitch = ''
                 {
                   read -r action
                   case "$action" in
-                    ${builtins.concatStringsSep "\n" actionFlagCases}
+                    ${concatStringsSep "\n" actionFlagCases}
                   esac
                 }
               '';
 
               command = pkgs.writeShellScript "${service}.actions.command" ''
-                ${lib.getExe pkgs.libnotify} \
+                ${getExe pkgs.libnotify} \
                   --expire-time ${notification.timeout} \
                   --icon ${notification.icon} \
                   --app-name NixOS \
-                  "Flake inputs updated" ${lib.optionalString hasActions ''
+                  "Flake inputs updated" ${optionalString hasActions ''
                     \
                     ${actionFlagsStr} | ${actionFlagsSwitch}
                   ''}
@@ -199,13 +228,13 @@
                 exit 1
               fi
 
-              ${lib.optionalString commit.enable ''
+              ${optionalString commit.enable ''
                 if ! ${commit.command}; then
                   echo "error: Something went wrong when committing the update" 2>&1
                 fi
               ''}
 
-              ${lib.optionalString notification.enable "nohup ${command} >/dev/null 2>&1 &"}
+              ${optionalString notification.enable "nohup ${command} >/dev/null 2>&1 &"}
             '';
           description = "Updates `${flake.root}`'s inputs.";
           serviceConfig.Type = "oneshot";

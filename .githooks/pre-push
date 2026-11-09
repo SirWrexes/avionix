@@ -15,7 +15,7 @@ DOCS_GENERATED="$FEATURES_DIR/README.md"
 export FLAKE_REV
 
 if git diff --quiet --staged origin/main -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED"; then
-  echo "🤷 No committed change in $FEATURES_DIR. Docs won't be generated."
+  # skip docs generation silently
   exit 0
 fi
 
@@ -48,3 +48,5 @@ cat "$DOCS_MARKDOWN" >"$DOCS_GENERATED"
 echo "📦 Commit doc changes"
 git add -- "$DOCS_GENERATED"
 git commit -m "doc(modules): Auto-generate docs" -- "$DOCS_GENERATED"
+
+echo "✅ Docs generated and committed successfully, please push again."

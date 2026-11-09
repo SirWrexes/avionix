@@ -27,6 +27,8 @@ rec {
         specialArgs = {
           inherit description;
 
+          lib' = nixpkgs.lib.extend (import ./lib);
+
           hosts = [ "artemis" ];
 
           dirs = rec {
