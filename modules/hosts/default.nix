@@ -31,8 +31,8 @@
       config = {
         flake = {
           host = config.host;
-          self = mkDefault self;
-          name = mkDefault description;
+          self = self;
+          name = description;
           root = mkDefault "${user.home}/.config/nixos";
         };
 
