@@ -44,8 +44,10 @@ rec {
       }
       (
         import-tree.filterNot (nixpkgs.lib.hasSuffix ".mod.nix") [
-          ./modules
           ./devShells
+          ./hardware-configs
+          ./modules
+          ./users
         ]
       );
 }
