@@ -25,7 +25,12 @@
     {
       options.services.input-remapper = {
         configDir = mkOption {
-          type = with types; nullOr (strMatching "/([^/]+/)*[^/]+/?");
+          type =
+            with types;
+            pathWith {
+              inStore = false;
+              absolute = true;
+            };
           description = ''
             Path to where your Input Remapper configs are saved.
           '';
