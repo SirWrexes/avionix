@@ -29,8 +29,6 @@ rec {
 
           lib' = nixpkgs.lib.extend (import ./lib);
 
-          hosts = [ "artemis" ];
-
           dirs = rec {
             root = ./.;
             assets = "${root}/assets";

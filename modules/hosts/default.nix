@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  hosts,
   description,
   ...
 }:
@@ -77,13 +76,12 @@
     let
       inherit (inputs.nixpkgs.lib)
         map
-        listToAttrs
+        mergeAttrsList
         nixosSystem
         ;
 
       systemFor = host: {
-        name = host;
-        value = nixosSystem {
+        "${host}" = nixosSystem {
           modules = [
             inputs.agenix.nixosModules.default
             self.nixosModules.default
@@ -98,7 +96,7 @@
         };
       };
 
-      allSystems = map systemFor hosts;
+      allSystems = map systemFor [ "artemis" ];
     in
-    listToAttrs allSystems;
+    mergeAttrsList allSystems;
 }
