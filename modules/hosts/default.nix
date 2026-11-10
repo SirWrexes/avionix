@@ -42,7 +42,7 @@
         networking.networkmanager.enable = mkDefault true;
 
         # Use Xanmod kernel
-        boot.kernelPackages = mkDefault pkgs.linuxPackages_xanmod_latest;
+        boot.kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_xanmod;
 
         # Make /tmp use RAM instead of disk
         boot.tmp = {
@@ -51,7 +51,9 @@
           cleanOnBoot = mkDefault true;
         };
 
-        # If /tmp is on RAM, move nix's temp dir for shells and builds to somewhere else on disk
+        # If /tmp is on RAM, move nix's temp dir for shells and builds to somewhere else on disk.
+        # This is because limiting TMPDIR can cause large builds to fail if the tmpfs is full, e.g. after several days
+        # of uptime.
         environment.sessionVariables.TMPDIR = mkIf config.boot.tmp.useTmpfs (mkDefault "/var/tmp/nix");
         systemd.tmpfiles.settings."99-nix-tmpdir" =
           let
