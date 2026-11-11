@@ -27,6 +27,8 @@ rec {
         specialArgs = {
           inherit description;
 
+          # Yes, I know <nixpkgs>' flake says it's bad.
+          # But it's quite useful, and I think I know what I'm doing.
           lib' = nixpkgs.lib.extend (import ./lib);
 
           dirs = rec {

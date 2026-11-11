@@ -1,15 +1,8 @@
-lib:
-let
-  base = lib.options;
-  inherit (base)
-    mkEnableOption
-    ;
-in
-{
-  options = base // {
+final: prev: {
+  options = {
     mkDisableOption =
       target:
-      mkEnableOption target
+      prev.mkEnableOption target
       // {
         default = true;
         example = false;
