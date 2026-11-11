@@ -8,11 +8,12 @@
     }:
     {
       environment.systemPackages = with pkgs; [
-        fd
-        ripgrep
         bat
         btop
+        fd
         lazygit
+        ripgrep
+        tree
         wl-clipboard
       ];
     };
