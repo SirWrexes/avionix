@@ -14,17 +14,12 @@
       ...
     }:
     let
-      inherit (lib)
-        mkDefault
-        mkIf
-        mkOption
-        ;
-
+      inherit (lib) mkDefault mkOption;
       inherit (config.users) user;
     in
     {
       options.host = mkOption {
-        type = options.networking.hostName.type;
+        inherit (options.networking.hostName) type;
       };
 
       config = {
@@ -42,30 +37,6 @@
 
         # Use Xanmod kernel
         boot.kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_xanmod;
-
-        # Make /tmp use RAM instead of disk
-        boot.tmp = {
-          useTmpfs = mkDefault true;
-          tmpfsSize = mkDefault "50%";
-          cleanOnBoot = mkDefault true;
-        };
-
-        # If /tmp is on RAM, move nix's temp dir for shells and builds to somewhere else on disk.
-        # This is because limiting TMPDIR can cause large builds to fail if the tmpfs is full, e.g. after several days
-        # of uptime.
-        environment.sessionVariables.TMPDIR = mkIf config.boot.tmp.useTmpfs (mkDefault "/var/tmp/nix");
-        systemd.tmpfiles.settings."99-nix-tmpdir" =
-          let
-            TMPDIR = config.environment.sessionVariables.TMPDIR or "";
-          in
-          mkIf (TMPDIR != "") ({
-            ${TMPDIR}.d = {
-              group = "users";
-              mode = "0755";
-              user = "${user.name}";
-              age = mkDefault "3d";
-            };
-          });
 
         # Le funny disrespect when I input le wrong password on accident
         security.sudo.package = mkDefault (pkgs.sudo.override { withInsults = true; });
