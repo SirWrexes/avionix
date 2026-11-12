@@ -34,7 +34,7 @@
 
       config = lib.mkIf cfg.enable {
         environment.sessionVariables = {
-          AGENIX_RULES = builtins.toString cfg.rulesFile;
+          AGENIX_RULES = toString cfg.rulesFile;
         };
       };
     };
