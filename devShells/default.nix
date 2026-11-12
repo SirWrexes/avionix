@@ -25,12 +25,12 @@
 
         export FLAKE_REV
 
-        # Note: `git diff` evaluates to true when there ISN'T a difference.
-        if git diff --quiet --staged origin -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED"; then
+        if ! git diff --quiet --staged origin -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED"; then
+          echo "🤷 Modules are unchanged. Docs won't be generated."
           exit 0
         fi
 
-        echo "💡 Some module(s) differ from upstream. Docs will be generated for this push."
+        echo "💡 There are changes in $FEATURES_DIR. Docs will be generated for this push."
 
         # Some files might be partially committed.
         # We want to run the docs generation on only the parts that are going to be pushed, so we stash the unchanged parts.
@@ -108,7 +108,9 @@
         }
 
         if [ "''${1-}" == "push" ]; then
+          echo "Considering pre-push docs generation..."
           pre-push "''${@:2}"
+          exit 0
         fi
 
         exec git "$@"
@@ -116,7 +118,10 @@
     in
     {
       devShells.default = pkgs.mkShellNoCC {
-        packages = [ git-wrapped ];
+        packages = [
+          gendocs
+          git-wrapped
+        ];
       };
     };
 }
