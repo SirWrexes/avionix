@@ -11,26 +11,28 @@
           case "$param" in
             "--dry-run") OPTS[dry]="--dry-run" ;;
             "--quiet")   OPTS[quiet]="--quiet" ;;
+            "--force")   OPTS[force]="--force" ;;
           esac
         done
 
         FLAKE_REV="$(git rev-parse HEAD)"
         HAS_STASH=0
 
-        BUILD_DIR="build/docs"
+        BUILD_DIR="build"
         FEATURES_DIR="modules/features"
 
-        DOCS_MARKDOWN="$BUILD_DIR/options.md"
+        DOCS_MARKDOWN="$BUILD_DIR/docs/options.md"
         DOCS_GENERATED="$FEATURES_DIR/README.md"
 
         export FLAKE_REV
 
-        if ! git diff --quiet --staged origin -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED"; then
+        if [ -z "''${OPTS[force]:-}" ] && git diff --quiet --staged origin -- "$FEATURES_DIR" ":(exclude)$DOCS_GENERATED"; then
           echo "🤷 Modules are unchanged. Docs won't be generated."
           exit 0
         fi
 
-        echo "💡 There are changes in $FEATURES_DIR. Docs will be generated for this push."
+        unset 'OPTS[force]'
+        echo "💡 Docs will be generated for this push."
 
         # Some files might be partially committed.
         # We want to run the docs generation on only the parts that are going to be pushed, so we stash the unchanged parts.
@@ -52,7 +54,7 @@
           build .#docs.optionsCommonMark \
             --offline \
             --impure \
-            "''${OPTS[@]:-}" \
+            "''${OPTS[@]}" \
             -o "$DOCS_MARKDOWN"
 
         echo "📝 Overwrite old docs"
@@ -85,6 +87,7 @@
         SKIPME[-h]="Showing help"
         SKIPME[-d]="Deleting refs"
         SKIPME[--prune]="Pruning refs"
+        SKIPME[--no-docgen]="Explicitly disabled docgen"
 
         SKIPME[--help]="''${SKIPME[-h]}"
         SKIPME[--delete]="''${SKIPME[-d]}"
@@ -94,13 +97,14 @@
 
           for param in "$@"; do
             if [ -n "''${SKIPME["$param"]:-}" ]; then
-              echo: "Skip docgen: ''${SKIPME["$param"]}"
+              echo "Skip docgen: ''${SKIPME["$param"]}"
               return
             fi
 
             case "$param" in
               "-q"|"--quiet")   opts+=("--quiet")   ;;
               "-n"|"--dry-run") opts+=("--dry-run") ;;
+              "-f"|"--force")   opts+=("--force")   ;;
             esac
           done
 
@@ -108,9 +112,8 @@
         }
 
         if [ "''${1-}" == "push" ]; then
-          echo "Considering pre-push docs generation..."
+          echo "==>> Considering pre-push docs generation..."
           pre-push "''${@:2}"
-          exit 0
         fi
 
         exec git "$@"
