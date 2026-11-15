@@ -26,13 +26,19 @@
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/dea2f351-ae95-49b0-a4b9-ed7bec17d452";
     fsType = "btrfs";
-    options = [ "subvol=nix" ];
+    options = [
+      "subvol=nix"
+      "noatime"
+    ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/dea2f351-ae95-49b0-a4b9-ed7bec17d452";
     fsType = "btrfs";
-    options = [ "subvol=home" ];
+    options = [
+      "subvol=home"
+      "noatime"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -44,10 +50,29 @@
     ];
   };
 
-  # fileSystems."/root/.cache/doc" =
-  #   { device = "portal";
-  #     fsType = "fuse.portal";
-  #   };
+  fileSystems."/mnt" = {
+    device = "/dev/disk/by-uuid/bd981445-4cbc-40a5-9273-15ba1db3e866";
+    fsType = "btrfs";
+    options = [ "compress=zstd:1" ];
+  };
+
+  fileSystems."/mnt/media" = {
+    device = "/dev/disk/by-uuid/bd981445-4cbc-40a5-9273-15ba1db3e866";
+    fsType = "btrfs";
+    options= [
+      "subvol=media"
+      "noatime"
+    ];
+  };
+
+  fileSystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/bd981445-4cbc-40a5-9273-15ba1db3e866";
+    fsType = "btrfs";
+    options= [
+      "subvol=games"
+      "noatime"
+    ];
+  };
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/a18061fe-5ce6-4933-a7da-d1a046fb5bdb"; }
