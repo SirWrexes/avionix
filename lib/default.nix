@@ -1,7 +1,1 @@
-final: prev: {
-  options = import ./options final prev;
-  inherit (final.options)
-    mkDisableOption
-    literalCode
-    ;
-}
+final: prev: prev // (import ./options.nix final prev)

@@ -1,5 +1,5 @@
 final: prev: {
-  options = {
+  options = prev.options // {
     mkDisableOption =
       target:
       prev.mkEnableOption target
@@ -8,4 +8,9 @@ final: prev: {
         example = false;
       };
   };
+
+  inherit (final.options)
+    mkDisableOption
+    literalCode
+    ;
 }
